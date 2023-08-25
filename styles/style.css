@@ -23,7 +23,7 @@ body {
 }
 
 
-/** Navbar */
+/** NABVAR */
 .bg-custom {
     background-color: var(--dark-violet2);
 }
@@ -44,13 +44,15 @@ body {
 }
 
 
-/** Main */
+/** MAIN  */
 .main-home,
 .main-detail,
-.main-stats {
+.main-stats,
+.main-upcomming,
+.main-past,
+.main-contact {
     background-color: var(--white-color);
 }
-
 
 /*? Carousel */
 .carousel-inner, 
@@ -83,6 +85,7 @@ body {
     text-shadow: -4px 4px 0px var(--dark-violet);
 }
 
+/** HOME */
 
 /*? Checkbox */
 .checks-content {
@@ -102,7 +105,6 @@ body {
     background-color: var(--dark-violet) !important;
 }
 
-
 /*? Search */
 .d-inline-block {
     margin: 1rem;
@@ -121,7 +123,7 @@ body {
 }
 
 
-/** Footer */
+/** FOOTER */
 footer .hstack {
     flex-direction: row;
     background-color: var(--dark-violet2) !important;
@@ -133,7 +135,7 @@ footer .hstack {
 }
 
 .hstack div a,
-footer>.hstack div .bi {
+footer>.hstack div .bi, .btn-send {
     border: 2px solid var(--magenta);
     color: var(--magenta);
     background-color: transparent;
@@ -147,7 +149,8 @@ footer>.hstack div .bi {
 }
 
 .hstack div a:hover, 
-footer>.hstack div .bi:hover {
+footer>.hstack div .bi:hover,
+.btn-send:hover {
     color: var(--white-color) !important;
     background-color: var(--dark-violet);
     border: 2px solid var(--dark-violet);
@@ -155,9 +158,9 @@ footer>.hstack div .bi:hover {
 }
 
 
-
-/** Detail */
-.card-content {
+/** DETAIL */
+.card-content, 
+.form-content {
     display: flex;
     flex-direction: column;
     justify-content:space-around;
@@ -179,20 +182,41 @@ footer>.hstack div .bi:hover {
     color: var(--dark-violet);
 }
 
+
 /** STATS */
 table{
     margin-bottom: 0 !important;
+    
 }
 thead tr th{
     background-color: var(--dark-gray) !important;
     color: var(--ligth-violet) !important;
+    width: 2.8rem;
 }
-th, td {
+tbody tr td {
     height:2rem;
-    padding: 0.1rem;
+    width: 2.8rem;
 }
 
-/** Media Queries */
+/** FORM */
+.form-content form{
+    background-color: var(--white-color);
+    border: none;
+}
+
+.btn-send {
+    width: max-content;
+    align-items: end;
+    padding: 0.5rem 1rem;
+}
+
+table .row-aux td {
+    color: #FFFFFF !important;
+}
+
+
+
+/** MEDIA QUERIES */
 
 @media (min-width: 768px) {
     .main-detail{
@@ -202,6 +226,25 @@ th, td {
     .card-content {
         padding: 0 5rem;
     }
+
+    table{
+        font-size: 1rem;
+    }
+
+    table tr th {
+        text-align: start;
+    }
+
+    table tbody tr th {
+        text-align: center;
+    }
+
+
+    .form-content form{
+        width: 40vw;
+        padding: 2rem 0;
+    }
+    
 }
 
 
@@ -246,4 +289,5 @@ th, td {
         background-color: var(--dark-violet-transparent) !important;
         opacity: 1 !important;
     }
+
 }
