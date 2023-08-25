@@ -1,0 +1,236 @@
+:root {
+    --magenta: #f7066a;
+    --light-magenta:#d31262b6;
+    --ligth-violet: #f0def3;
+    --ligth-violet-transparent: #d0bdd4af;
+    --dark-violet:#770b8d;
+    --dark-violet-transparent: #770b8d6b;
+    --dark-violet2: #1c0122;
+    --dark-gray: #413F42;
+    --light-gray: #7F8487;
+    --white-color: #f0e5f0;
+    ---transition: all 0.5s ease;
+}
+
+body {
+    background-color: var(--white-color);
+    font-size: 16px;
+}
+.container {
+    margin: 0 auto!important;
+    padding: 0 !important;
+    box-sizing: border-box;
+}
+
+
+/** Navbar */
+.bg-custom {
+    background-color: var(--dark-violet2);
+}
+
+.navbar-brand img {
+    width:200px;
+    height:60px;
+}
+
+.navbar-toggler, 
+.navbar-toggler-icon span{
+    background-color: var(--light-magenta) !important;
+}
+
+.nav-link {
+    color: var(--magenta) !important;
+    font-weight: 600 !important;
+}
+
+
+/** Main */
+.main-home,
+.main-detail {
+    background-color: var(--white-color);
+}
+
+
+
+/*? Carousel */
+.carousel-inner, 
+.carousel-item {
+    height:200px;
+    object-fit: cover;
+}
+
+.carousel-control-prev-icon, 
+.carousel-control-next-icon {
+    background-color: var(--magenta);
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.carousel-indicators button {
+    background-color: var(--magenta) !important;
+    margin-bottom: 2rem !important;
+}
+
+.carousel-caption {
+    background-color: var(--ligth-violet-transparent);
+    bottom: 2.5rem !important;
+}
+
+.carousel-caption h3{
+    color: var(--magenta);
+    font-size: 3rem;
+    width: 800;
+    text-shadow: -4px 4px 0px var(--dark-violet);
+}
+
+
+/*? Checkbox */
+.checks-content {
+    display: flex;
+    flex:1;
+    justify-content:space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.form-check-input {
+    border: 2px solid var(--dark-violet) !important;
+    background-color: var(--white-color);
+    text-align: center;
+}
+
+.form-check-input:checked{
+    background-color: var(--dark-violet) !important;
+}
+
+
+/*? Search */
+.d-inline-block {
+    margin: 1rem;
+}
+
+
+/*? Cards */
+.card-img-top{
+    padding: 1rem;
+}
+
+.input-group-text{
+    background-color: var(--dark-violet) !important;
+    color: var(--white-color) !important;
+    font-weight: 600 !important;
+}
+
+
+/** Footer */
+footer .hstack {
+    flex-direction: row;
+    background-color: var(--dark-violet2) !important;
+    color:white;
+}
+
+.hstack {
+    padding: 2rem 1rem;
+}
+
+.hstack div a,
+footer>.hstack div .bi {
+    border: 2px solid var(--magenta);
+    color: var(--magenta);
+    background-color: transparent;
+    border-radius: 5px;
+    width: 3rem;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: var(---transition);
+    text-decoration: none;
+}
+
+.hstack div a:hover, 
+footer>.hstack div .bi:hover {
+    color: var(--white-color) !important;
+    background-color: var(--dark-violet);
+    border: 2px solid var(--dark-violet);
+    font-weight: 600;
+}
+
+
+
+/** Detail */
+.card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content:space-around;
+    align-items: center;
+}
+.card-content .card {
+    border: 10px solid var(--dark-violet-transparent);
+}
+
+.card-content .card img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.card-body li {
+    list-style-type: none;
+    line-height: 2rem;
+    font-weight: 600;
+    color: var(--dark-violet);
+}
+
+/** Media Queries */
+
+@media (min-width: 768px) {
+    .main-detail{
+        display: flex;
+        height: 67vh;
+    }
+    .card-content {
+        padding: 0 5rem;
+    }
+}
+
+
+@media (min-width: 992px){
+    .navbar-expand-lg 
+    .navbar-collapse a{
+        border: 2px solid var(--magenta);
+        color: var(--magenta);
+        background-color: transparent;
+        border-radius: 5px;
+        width: max-content;
+        margin: 0 0.5rem;
+        text-align:justify;
+        font-weight: 600;
+        font-size: 0.7rem;
+        transition: var(---transition);
+    }
+    .navbar-expand-lg 
+    .navbar-collapse a:hover {
+        color: var(--white-color) !important;
+        background-color: var(--dark-violet);
+        border: 2px solid var(--dark-violet);
+        font-weight: 600;
+    }
+
+    .navbar-collapse {
+        flex-grow: 0.1 !important;
+    }
+    .carousel-item img {
+        width: 100%;
+        object-fit: cover;
+    }
+
+
+    .main-detail {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .card-content .card .vr{
+        background-color: var(--dark-violet-transparent) !important;
+        opacity: 1 !important;
+    }
+}
