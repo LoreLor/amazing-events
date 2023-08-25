@@ -8,7 +8,7 @@
     --dark-violet2: #1c0122;
     --dark-gray: #413F42;
     --light-gray: #7F8487;
-    --white-color: #f0e5f0;
+    --white-color: #f8e9f8;
     ---transition: all 0.5s ease;
 }
 
@@ -46,10 +46,10 @@ body {
 
 /** Main */
 .main-home,
-.main-detail {
+.main-detail,
+.main-stats {
     background-color: var(--white-color);
 }
-
 
 
 /*? Carousel */
@@ -177,6 +177,19 @@ footer>.hstack div .bi:hover {
     line-height: 2rem;
     font-weight: 600;
     color: var(--dark-violet);
+}
+
+/** STATS */
+table{
+    margin-bottom: 0 !important;
+}
+thead tr th{
+    background-color: var(--dark-gray) !important;
+    color: var(--ligth-violet) !important;
+}
+th, td {
+    height:2rem;
+    padding: 0.1rem;
 }
 
 /** Media Queries */
