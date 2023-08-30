@@ -1,3 +1,4 @@
+let colCard = document.getElementById("colCard");
 let template = ``;
 
 // Obtiene la fecha actual
