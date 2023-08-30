@@ -14,10 +14,10 @@ const filterPastDate = () =>{
         }
     }
 }
-const filtros = filterPastDate()
-console.log(pastEvents)
+const filterPast = filterPastDate()
 
-
+//renderiza cards
+const templateRender = () => {
     for(let item of pastEvents){
         template += `<div class="col">
         <div class="card h-100">
@@ -38,8 +38,9 @@ console.log(pastEvents)
         </div>`;
     
     }
+    return template
+}
 
 
 
-console.log(template)
-colCard.innerHTML = template
+colCard.innerHTML = templateRender(filterPast)
