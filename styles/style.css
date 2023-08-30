@@ -112,6 +112,16 @@ body {
 
 
 /*? Cards */
+.card{
+    background-color: #f9f6fa !important;
+    border: 1px solid var(--dark-violet-transparent) !important;
+}
+
+.card-title { 
+    color: var(--magenta) !important;
+    font-weight: 700 !important;
+    text-shadow: -1px 2px 0px var(--dark-violet);
+}
 .card-img-top{
     padding: 1rem;
     height:15rem;
@@ -154,8 +164,8 @@ footer>.hstack div .bi, .btn-send {
 footer>.hstack div .bi:hover,
 .btn-send:hover {
     color: var(--white-color) !important;
-    background-color: var(--dark-violet);
-    border: 2px solid var(--dark-violet);
+    background-color: var(--dark-violet2);
+    border: 2px solid var(--dark-violet2);
     font-weight: 600;
 }
 
