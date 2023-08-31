@@ -186,88 +186,8 @@
                     </button>
                 </div>
 
-                <!-- Checks Categories-->
-                <div class="container-fluid mt-2 py-4 px-3 checks-content">
-                    <div class="form-check form-check-inline">
-                        <input
-                            class="form-check-input"
-                            type="checkbox"
-                            name="category1"
-                            id="category1"
-                            value="option1"
-                        >
-                        <label class="form-check-label" for="category1"
-                            >Category1</label
-                        >
-                    </div>
-
-                    <div class="form-check form-check-inline">
-                        <input
-                            class="form-check-input"
-                            type="checkbox"
-                            name="category2"
-                            id="category2"
-                            value="option2"
-                        >
-                        <label class="form-check-label" for="category2"
-                            >Category2</label
-                        >
-                    </div>
-
-                    <div class="form-check form-check-inline">
-                        <input
-                            class="form-check-input"
-                            type="checkbox"
-                            name="category3"
-                            id="category3"
-                            value="option3"
-                        >
-                        <label class="form-check-label" for="category3"
-                            >Category3</label
-                        >
-                    </div>
-
-                    <div class="form-check form-check-inline">
-                        <input
-                            class="form-check-input"
-                            type="checkbox"
-                            name="category4"
-                            id="category4"
-                            value="option4"
-                        >
-                        <label class="form-check-label" for="category4"
-                            >Category4</label
-                        >
-                    </div>
-
-                    <div class="form-check form-check-inline">
-                        <input
-                            class="form-check-input"
-                            type="checkbox"
-                            name="category5"
-                            id="category5"
-                            value="option5"
-                        >
-                        <label class="form-check-label" for="category5">
-                            Category5
-                        </label
-                        >
-                    </div>
-
-                    <form class="d-inline-block" role="search" method="post">
-                        <div class="input-group">
-                            <input
-                                class="form-control"
-                                type="search"
-                                placeholder="Search"
-                                aria-label="Search"
-                            >
-                            <span class="input-group-text">
-                                <i class="bi bi-search"></i>
-                            </span>
-                        </div>
-                    </form>
-                </div>
+                <!-- Checks Categories- JS -->
+                <div class="container-fluid mt-2 py-4 px-3 checks-content" id="contenCheck"></div>
 
                 <!-- Cards - JS-->
                 <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-2 pb-5 px-2"  id="colCard"></div>
@@ -280,7 +200,10 @@
                     <div class="p-2"><i class="bi bi-github"></i></div>
                     <div class="p-2"><i class="bi bi-linkedin"></i></div>
                     <div class="p-2"><i class="bi bi-twitter"></i></div>
-                    <div class="p-2 ms-auto"><p>COHORT</p></div>
+                    <div class="p-2 ms-auto">
+                        <div>Total Cards: <span id="cardsLength"></span></div>
+                        <p>COHORT</p>
+                    </div>
                 </div>
             </footer>
         </div>
