@@ -84,7 +84,7 @@ const categories = getCategories(data);
 let contentCheck = document.getElementById('contenCheck');
 let template2 = '';
 
-const renderChecks = () => {
+const renderChecks = (categories) => {
     for(let item of categories){
             template2 += `
                 <div class="form-check form-check-inline">

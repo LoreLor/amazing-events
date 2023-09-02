@@ -17,7 +17,7 @@ const filterPastDate = () =>{
 const filterPast = filterPastDate()
 
 //renderiza cards
-const templateRender = () => {
+const templateRender = (pastEvents) => {
     for(let item of pastEvents){
         template += `<div class="col">
         <div class="card h-100">

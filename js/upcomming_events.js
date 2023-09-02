@@ -19,7 +19,7 @@ const filterUpComm = filterComming(data)
 
 
 // renderiza cards
-const templateRender = () =>{
+const templateRender = (commingEvents) =>{
     for(let item of commingEvents){
         template += `
         <div class="col">

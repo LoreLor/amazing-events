@@ -160,12 +160,13 @@ body {
     object-fit: cover;
     transition: var(--transition) ;
 }
+
 .state{
     display: flex;
     justify-content: center;
     align-items: center;
     width: 80%;
-    margin: 0 auto ;
+    margin: 0 auto;
 }
 
 .biFavorite {
