@@ -197,6 +197,7 @@ footer>.hstack div .bi:hover,
 
 /** STATS */
 /** STATS */
+/** STATS */
 table{
     margin-bottom: 0 !important;
     
@@ -209,6 +210,22 @@ thead tr th{
 tbody tr td {
     height:2rem;
     width: 2.8rem;
+}
+
+/** FORM */
+.form-content form{
+    background-color: var(--white-color);
+    border: none;
+}
+
+.btn-send {
+    width: max-content;
+    align-items: end;
+    padding: 0.5rem 1rem;
+}
+
+table .row-aux td {
+    color: #FFFFFF !important;
 }
 
 /** FORM */
