@@ -156,9 +156,7 @@ function combineFilters (){
     let checksFilterResults = cheksFiltered()
     let searchFilterResult = searchFiltered()
 
-    let combined = checksFilterResults ? 
-        checksFilterResults.filter(item => searchFilterResult.includes(item)) 
-        : datos
+    let combined = checksFilterResults.filter(item => searchFilterResult.includes(item))
     
     // console.log('combined :>> ', combined);
 
