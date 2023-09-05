@@ -92,19 +92,22 @@ body {
 /*? Checkbox */
 .checks-content {
     display: flex;
-    flex:1;
     justify-content:center;
     align-content: center;
     align-items: baseline;
     flex-wrap: wrap;
-    flex-grow: 1;
+    flex-grow:1;
 }
 
-
+.form-check-inline label{
+    color: var(--magenta);
+    font-weight: 600;
+}
 .form-check-input {
     border: 2px solid var(--dark-violet) !important;
     background-color: var(--white-color);
     text-align: center;
+    color: var(--magenta);
 }
 
 .form-check-input:checked{
@@ -128,21 +131,20 @@ body {
 #colcard{
     perspective: 1000px;
 }
-.card{
+#card{
     background-color: #f9f6fa !important;
     border: 1px solid var(--dark-violet-transparent) !important;
     position: relative;
     transition: var(--transition);
 }
-.card:hover{
+#card:hover{
     background: radial-gradient(#ffffffdc, #30033b5d);
     transform: scale(0.93);
 }
 
 .card-title { 
-    color: var(--magenta) !important;
+    color: var(--dark-violet) !important;
     font-weight: 700 !important;
-    text-shadow: -1px 2px 0px var(--dark-violet);
 }
 
 .card-img-top{
@@ -253,7 +255,7 @@ footer>.hstack div .bi:hover,
     align-items: center;
 }
 .card-content .card {
-    border: 10px solid var(--dark-violet-transparent);
+    border: 5px solid var(--dark-violet-transparent);
 }
 
 .card-content .card img {
@@ -261,7 +263,7 @@ footer>.hstack div .bi:hover,
     object-fit: cover;
 }
 
-.card-body li {
+#detailCard li {
     list-style-type: none;
     line-height: 2rem;
     font-weight: 600;
@@ -288,6 +290,11 @@ tbody tr td {
 .form-content form{
     background-color: var(--white-color);
     border: none;
+}
+
+.form-label {
+    color: var(--dark-violet);
+    font-weight: 600;
 }
 
 .btn-send {

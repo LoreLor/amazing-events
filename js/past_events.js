@@ -28,7 +28,7 @@ cardsLength.innerHTML = dataLength
 const createCardTemplate = (item) => {
     let template = "";
     template += `<div class="col-md-6">
-        <div class="card h-100">
+        <div class="card h-100" id="card">
             <img src=${item.image} class="card-img-top" alt="imagen 2">
             <i class="bi bi-heart-fill biFavorite" id="iconfav"></i>
             <div class="card-body">
@@ -40,7 +40,7 @@ const createCardTemplate = (item) => {
             <div class="hstack gap-3 text-center px-2 py-3">
                 <div class="p-2 fw-bold">$ ${item.price}</div>
                 <div class="p-2 ms-auto">
-                    <a href="details.html">Details</a>      
+                <a href="details.html?id=${item._id}">Details</a>      
                 </div>
             </div>
         </div>

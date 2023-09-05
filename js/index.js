@@ -4,6 +4,7 @@ const colCard = document.getElementById("colCard");
 //* Checkboxs & Search Content
 const contentCheck = document.getElementById("contenCheck");
 
+
 //* Favoritos
 const biClassFav = document.querySelector('.biFavorite'); 
 
@@ -12,7 +13,7 @@ const fechaActual = data.currentDate;
 const datos = data.events;
 
 //* Events Lengths
-let cardsLength = document.getElementById("cardsLength");
+const cardsLength = document.getElementById("cardsLength");
 let dataLength = datos.length;
 cardsLength.innerHTML = dataLength;
 
@@ -23,8 +24,8 @@ cardsLength.innerHTML = dataLength;
 const createTemplate = (item) => {
     let template = "";
     template += `<div class="col-md-6">
-        <div class="card h-100">
-            <img src=${item.image} class="card-img-top" alt="imagen 2">
+        <div class="card h-100" id="card">
+            <img src=${item.image} class="card-img-top" alt=${item.name}>
             <i class="bi bi-heart-fill biFavorite" id="iconfav"></i>
             <div class="card-body">
                 <h5 class="card-title">${item.name}</h5>
@@ -35,7 +36,7 @@ const createTemplate = (item) => {
             <div class="hstack gap-3 text-center px-2 py-3">
                 <div class="p-2 fw-bold">$ ${item.price}</div>
                 <div class="p-2 ms-auto">
-                    <a href="details.html">Details</a>      
+                    <a href="details.html?id=${item._id}">Details</a>      
                 </div>
             </div>
         </div>
@@ -158,7 +159,6 @@ function combineFilters (){
 
     let combined = checksFilterResults.filter(item => searchFilterResult.includes(item))
 
-    let cardsLength = document.getElementById("cardsLength");
     let dataLength = combined.length;
     cardsLength.innerHTML = dataLength;
 
