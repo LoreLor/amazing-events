@@ -212,6 +212,12 @@ body {
 
 
 /** FOOTER */
+footer{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 100%;
+}
 footer .hstack {
     flex-direction: row;
     background-color: var(--dark-violet2) !important;
@@ -253,21 +259,43 @@ footer>.hstack div .bi:hover,
     flex-direction: column;
     justify-content:space-around;
     align-items: center;
+
 }
 .card-content .card {
+    background-color: #1c0122;
     border: 5px solid var(--dark-violet-transparent);
+    box-shadow: 1px -2px 20px 11px var(--ligth-violet-transparent);
 }
 
 .card-content .card img {
     width: 100%;
     object-fit: cover;
+    border-radius: 2rem 0;
+    box-shadow: 1px -2px 20px 11px var(--ligth-violet-transparent);
+}
+.dataBody {
+    display: flex;
+    flex-direction: column;
+    align-content: flex-end;
+    justify-content: center;
+    line-height: 2rem;
+    margin-left: 2.5rem;
+    
 }
 
-#detailCard li {
+.dataBody h4 {
+    margin-bottom: 2rem;
+    text-transform:uppercase;
+    text-align: start !important;
+    color: var(--ligth-violet) !important;
+}
+
+.dataBody li {
     list-style-type: none;
     line-height: 2rem;
     font-weight: 600;
-    color: var(--dark-violet);
+    color: var(--magenta);
+
 }
 
 
@@ -337,6 +365,10 @@ table .row-aux td {
         width: 40vw;
         padding: 2rem 0;
     }
+
+    footer{
+        width: 100%;
+    }
     
 }
 
@@ -381,6 +413,10 @@ table .row-aux td {
     .card-content .card .vr{
         background-color: var(--dark-violet-transparent) !important;
         opacity: 1 !important;
+    }
+
+    footer{
+        width: 100%;
     }
 
 }
