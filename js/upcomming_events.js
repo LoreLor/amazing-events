@@ -142,7 +142,6 @@ function checksFilter() {
             ? filterComing.filter((item) => arrChecks.includes(item.category))
             : filterComing;
 
-           // console.log('itemFiltered :>> ', itemFiltered);
     return itemFiltered;
 }
 
@@ -154,8 +153,7 @@ function searchFilter() {
     let inputSearch = normalizedValue !== ''? 
         filterComing.filter(item => (item.name).includes(normalizedValue))
         : filterComing;
-        
-        console.log('inputSearch :>> ', inputSearch);
+
     return inputSearch
 }
 
@@ -164,10 +162,7 @@ function combineFilters (){
     let searchFilterResult = searchFilter()
 
     let combined = checksFilterResults.filter(item => searchFilterResult.includes(item))
-    
-    // console.log('combined :>> ', combined);
 
-    let cardsLength = document.getElementById("cardsLength");
     let dataLength = combined.length;
     cardsLength.innerHTML = dataLength;
 
@@ -177,10 +172,9 @@ function combineFilters (){
 
 const handlerChange = () => {
     let combineResults = combineFilters()
-    // console.log('combineResults :>> ', combineResults);
-    if(combineResults.length === 0){
-        swal("Event is not found, try with other name...");
-    }
+        if(combineResults.length === 0){
+            swal("Event is not found, try with other name...");
+        }
     
     renderCards(combineResults, colCard)
 }

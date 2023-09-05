@@ -141,9 +141,9 @@ function searchFiltered() {
     // capturo el valor
     const inputValue = document.querySelector('input[type="search"]');
     const valueSearch = inputValue.value.toLowerCase();
-    //la primera con mayuscula
+    // la primera con mayuscula
     const normalizedValue = valueSearch.charAt(0).toUpperCase() + valueSearch.slice(1) || valueSearch;
-    //filter
+    // filter
     let inputSearch = normalizedValue !== ""
             ? datos.filter((item) => (item.name).includes(normalizedValue))
             : datos;
@@ -157,8 +157,6 @@ function combineFilters (){
     let searchFilterResult = searchFiltered()
 
     let combined = checksFilterResults.filter(item => searchFilterResult.includes(item))
-    
-    // console.log('combined :>> ', combined);
 
     let cardsLength = document.getElementById("cardsLength");
     let dataLength = combined.length;
@@ -190,7 +188,6 @@ contentCheck.addEventListener("submit", handlerSubmit);
 //! Favorites
 // cambio el color
 function favoriteToggleColor(biClassFav) {
-    //console.log('biClassFav :>> ', biClassFav);
     biClassFav.classList.toggle('biFavRed')
 }
 
