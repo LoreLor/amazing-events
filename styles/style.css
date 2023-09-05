@@ -77,14 +77,14 @@ body {
 
 .carousel-caption {
     background-color: var(--ligth-violet-transparent);
-    bottom: 2.5rem !important;
+    bottom: 3rem !important;
 }
 
 .carousel-caption h3{
     color: var(--magenta);
-    font-size: 3rem;
+    font-size: 2rem;
     width: 800;
-    text-shadow: -4px 4px 0px var(--dark-violet);
+    text-shadow: -2px 2px 0px var(--dark-violet);
 }
 
 /** HOME */
@@ -93,10 +93,14 @@ body {
 .checks-content {
     display: flex;
     flex:1;
-    justify-content:space-around;
-    align-items: center;
+    justify-content:center;
+    align-content: center;
+    align-items: baseline;
     flex-wrap: wrap;
+    flex-grow: 1;
 }
+
+
 .form-check-input {
     border: 2px solid var(--dark-violet) !important;
     background-color: var(--white-color);
@@ -128,25 +132,12 @@ body {
     background-color: #f9f6fa !important;
     border: 1px solid var(--dark-violet-transparent) !important;
     position: relative;
-    
-    transform-style: preserve-3d;
-    transition: var(--transition) ;
+    transition: var(--transition);
 }
 .card:hover{
-    background-color: #ebbaff !important;
-    transform: rotateX(15deg) rotateY(30deg) rotateZ(0deg);
+    background: radial-gradient(#ffffffdc, #30033b5d);
+    transform: scale(0.93);
 }
-
-@keyframes cardEffect {
-    0% {
-		transform: scale(0);
-	}
-
-	100% {
-		transform: scale(1);
-	}
-}
-
 
 .card-title { 
     color: var(--magenta) !important;
@@ -176,11 +167,14 @@ body {
     font-size: 2.3rem;
     color: #770b8d;
     cursor: pointer;
-
 }
 
 .biFavorite:hover {
     animation: bounce 2s ease-in-out;
+}
+
+.biFavRed{
+    color: red;
 }
 
 @keyframes bounce {

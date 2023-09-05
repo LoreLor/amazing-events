@@ -1,22 +1,31 @@
-let colCard = document.getElementById("colCard");
-let template = '';
-//! Estado del evento
-const state = document.querySelectorAll('.state');
+//* Cards
+const colCard = document.getElementById("colCard");
+
+//* Checkboxs & Search Content
+const contentCheck = document.getElementById("contenCheck");
+
+//* Favoritos
+const biClassFav = document.querySelector('.biFavorite'); 
+
+//* Object elements: currentDate - events
 const fechaActual = data.currentDate;
+const datos = data.events;
 
-//! cards
-const templateRender = (data) => {
-    for(let item of data.events){
+//* Events Lengths
+let cardsLength = document.getElementById("cardsLength");
+let dataLength = datos.length;
+cardsLength.innerHTML = dataLength;
 
-        // Calcula el estado del evento
-        let stateEvent = fechaActual < item.date ? 'Coming up' : 'Ocurred';
-        let colorStyle = stateEvent === 'Ocurred' ? 'color: red; border: 2px solid red' : 'color: green; border: 2px solid green';
 
-        template += `<div class="col">
+//*----------------------------------------
+
+//! Cards Template (elementHTML: colCard)
+const createTemplate = (item) => {
+    let template = "";
+    template += `<div class="col-md-6">
         <div class="card h-100">
             <img src=${item.image} class="card-img-top" alt="imagen 2">
-            <i class="bi bi-heart-fill biFavorite"></i>
-            <span class="state" style="${colorStyle}">${stateEvent}</span>
+            <i class="bi bi-heart-fill biFavorite" id="iconfav"></i>
             <div class="card-body">
                 <h5 class="card-title">${item.name}</h5>
                 <p class="card-text">
@@ -30,112 +39,170 @@ const templateRender = (data) => {
                 </div>
             </div>
         </div>
-    </div>`
-    }
+    </div>`;
     return template;
-}
+};
 
-colCard.innerHTML = templateRender(data);
-
-
-
-//! Favoritos
-//* selecciono todos los corazones
-let biClassList = document.querySelectorAll('.biFavorite'); 
-
-    biClassList.forEach((biClass) => {
-        let isActive = false; 
-
-        const toggleFavorite = () => {
-            //* seteo al estado actual
-            isActive = !isActive; 
-
-            if (isActive) {
-                //* activo--> true => cambio a rojo
-                biClass.style.color = 'red'; 
-            } else {
-                //* activo--> false => elimino el rojo
-                biClass.style.color = ''; 
-            }
-        }
-
-        //* agrego el evento y la funcion de switcheo al icono
-        biClass.addEventListener('click', toggleFavorite);
-});
-
-
-
-//! checkbox
-//* me guardo las categorias en un array
-const getCategories = (data) => {
-    const arrCategories = [];
-
-    data.events.forEach(item => {
-        if (!arrCategories.includes(item.category)) {
-            arrCategories.push(item.category);
-        }
+const renderCards = (array, elementHTML) => {
+    let structure = "";
+    array.forEach((item) => {
+        structure += createTemplate(item);
+ 
     });
-    return arrCategories;
+    elementHTML.innerHTML = structure;
+};
+renderCards(datos, colCard);
+
+
+//*----------------------------------------
+
+//! Checkbox (elementHTML: contentCheck)
+// me guardo las categorias en un array - sin elementos duplicados y ordenados
+const filterCategories = [...new Set(datos.map((item) => item.category))].sort();
+
+const createCheckTemplate = (item) => {
+    let template = "";
+    template = `
+        <div class="form-check-inline px-2">
+            <input
+                class="form-check-input"
+                type="checkbox"
+                id="${item}"
+                value="${item}"
+            >
+            <label class="form-check-label" for=${item}
+                >${item}</label
+            >
+        </div>
+    `;
+    return template;
+};
+
+const renderChecks = (array, elementHTML) => {
+    let structure = "";
+    array.forEach((item) => {
+        structure += createCheckTemplate(item);
+    });
+    elementHTML.innerHTML = structure;
+};
+renderChecks(filterCategories, contentCheck);
+
+
+//! Search Template
+const createSearchTemplate = () => {
+    let template = "";
+    template += `
+        <form class="d-inline-block" role="search" method="post">
+            <div class="input-group">
+                <input
+                    class="form-control"
+                    type="search"
+                    placeholder="Search"
+                    aria-label="Search"
+                    name="search"
+                    value=""
+                >
+                <span class="input-group-text">
+                    <i class="bi bi-search"></i>
+                </span>
+            </div>
+        </form>
+    `;
+    return template;
+};
+
+const renderSearch = (elementHTML) => {
+    let structure = "";
+    structure += createSearchTemplate();
+    elementHTML.innerHTML += structure; // concateno con la existente
+};
+renderSearch(contentCheck);
+
+//*----------------------------------------
+
+//! Filters & Listeners
+
+function cheksFiltered() {
+    // checks seleccionados
+    const nodeListChecks = document.querySelectorAll('input[type="checkbox"]:checked');
+
+    //paso a array
+    let arrChecks = Array.from(nodeListChecks).map((input) => input.value);
+
+    //filter
+    let itemsFiltered = arrChecks.length > 0
+            ? datos.filter((item) => arrChecks.includes(item.category))
+            : datos;
+
+    return itemsFiltered;
 }
 
-//* accedo al array de categorias
-const categories = getCategories(data);
+function searchFiltered() {
+    // capturo el valor
+    const inputValue = document.querySelector('input[type="search"]');
+    const valueSearch = inputValue.value.toLowerCase();
+    //la primera con mayuscula
+    const normalizedValue = valueSearch.charAt(0).toUpperCase() + valueSearch.slice(1) || valueSearch;
+    //filter
+    let inputSearch = normalizedValue !== ""
+            ? datos.filter((item) => (item.name).includes(normalizedValue))
+            : datos;
+            
+    return inputSearch;
+}
 
-let contentCheck = document.getElementById('contenCheck');
-let template2 = '';
+function combineFilters (){
+    // me traigo las funciones de filtrado
+    let checksFilterResults = cheksFiltered()
+    let searchFilterResult = searchFiltered()
 
-const renderChecks = (categories) => {
-    for(let item of categories){
-            template2 += `
-                <div class="form-check form-check-inline">
-                    <input
-                        class="form-check-input"
-                        type="checkbox"
-                        name=${item}
-                        id=${item}
-                        value=${item}
-                    >
-                    <label class="form-check-label" for="category1"
-                        >${item}</label
-                    >
-                </div>
-            `
+    let combined = checksFilterResults ? 
+        checksFilterResults.filter(item => searchFilterResult.includes(item)) 
+        : datos
+    
+    // console.log('combined :>> ', combined);
+
+    let cardsLength = document.getElementById("cardsLength");
+    let dataLength = combined.length;
+    cardsLength.innerHTML = dataLength;
+
+    return combined
+}
+
+const handlerChange = () => {
+    let combineResults = combineFilters()
+        if(combineResults.length === 0){
+            swal("Event is not found, try with other name...");
         }
-        template2 += `
-                <form class="d-inline-block" role="search" method="post">
-                    <div class="input-group">
-                        <input
-                            class="form-control"
-                            type="search"
-                            placeholder="Search"
-                            aria-label="Search"
-                        >
-                        <span class="input-group-text">
-                            <i class="bi bi-search"></i>
-                        </span>
-                    </div>
-                </form>
-            `
-        return template2
+
+    renderCards(combineResults, colCard);
+};
+
+const handlerSubmit = (e) => {
+    e.preventDefault();
+    contentCheck.addEventListener('input', handlerChange)
+};
+
+// inyecto los escuchadores
+contentCheck.addEventListener("change", handlerChange);
+contentCheck.addEventListener("submit", handlerSubmit);
+
+//*----------------------------------------
+
+//! Favorites
+// cambio el color
+function favoriteToggleColor(biClassFav) {
+    //console.log('biClassFav :>> ', biClassFav);
+    biClassFav.classList.toggle('biFavRed')
 }
 
-//* inyecto los checkboxs
-contentCheck.innerHTML = renderChecks(categories)
-
-//* cantidad de cartas
-let cardsLength = document.getElementById('cardsLength')
-let dataLength = data.events.length
-
-//* inyecto el dataLength
-cardsLength.innerHTML = dataLength;
-
-
-
-
-
-
-
-
-
-
+// agrego el evento a la card
+function addCardFavoriteEvent() {
+    document.addEventListener('click', (e) => {
+        if(e.target.classList.contains('biFavorite')){
+            favoriteToggleColor(e.target)
+        }
+    })
+}
+addCardFavoriteEvent()
 
