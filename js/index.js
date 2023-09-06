@@ -42,16 +42,18 @@ const createTemplate = (item) => {
     </div>`;
     return template;
 };
-
 const renderCards = (array, elementHTML) => {
     let structure = "";
     array.forEach((item) => {
         structure += createTemplate(item);
- 
+        
     });
     elementHTML.innerHTML = structure;
+    return structure
 };
+
 renderCards(datos, colCard);
+
 
 
 //*----------------------------------------
@@ -82,8 +84,9 @@ const renderChecks = (array, elementHTML) => {
     let structure = "";
     array.forEach((item) => {
         structure += createCheckTemplate(item);
+        elementHTML.innerHTML = structure;
     });
-    elementHTML.innerHTML = structure;
+    return structure
 };
 renderChecks(filterCategories, contentCheck);
 
@@ -115,6 +118,7 @@ const renderSearch = (elementHTML) => {
     let structure = "";
     structure += createSearchTemplate();
     elementHTML.innerHTML += structure; // concateno con la existente
+    return structure
 };
 renderSearch(contentCheck);
 
@@ -170,7 +174,6 @@ const handlerChange = (arr, elementHTML) => {
         if(combineResults.length === 0){
             swal("Event is not found, try with other name...");
         }
-
     renderCards(combineResults, elementHTML)
 };
 

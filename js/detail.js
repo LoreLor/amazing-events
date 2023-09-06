@@ -58,6 +58,7 @@ const renderDetailTemplate = (item, current, elementHTML) => {
     let structure = ''
     structure += createDetailTemplate(item, current)
     elementHTML.innerHTML = structure
+    return structure
 }
 renderDetailTemplate(detail, current, detailCard )
 

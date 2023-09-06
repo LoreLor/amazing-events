@@ -52,8 +52,9 @@ const renderCards = (arr, elementHTML) => {
     let structure = "";
     arr.forEach((item) => {
         structure += createCardTemplate(item);
+        elementHTML.innerHTML = structure;
     });
-    elementHTML.innerHTML = structure;
+    return structure
 };
 renderCards(filterPast, colCard);
 
@@ -86,8 +87,9 @@ const renderChecks = (arr, elementHTML) => {
     let structure = "";
     arr.forEach((item) => {
         structure += createCheckTemplates(item);
+        elementHTML.innerHTML = structure;
     });
-    elementHTML.innerHTML = structure;
+    return structure
 };
 renderChecks(filterCategories, contentCheck);
 
@@ -120,6 +122,7 @@ const renderSearch = (elementHTML) => {
     let structure = "";
     structure += createSearchTemplate();
     elementHTML.innerHTML += structure;
+    return structure
 };
 renderSearch(contentCheck);
 
@@ -186,14 +189,16 @@ contentCheck.addEventListener('submit', handlerSubmit)
 
 //! Favorites
 function favoriteToogleColor(biClassFav) {
-    biClassFav.classList.toggle('biFavRed')
+    return biClassFav.classList.toggle('biFavRed')
 }
 
 function addCardFavoriteEvent() {
     document.addEventListener('click',(e) => { 
-        if(e.target.classList.contains('biFavorite'))
-        favoriteToogleColor(e.target)
-    });
+        if(e.target.classList.contains('biFavorite')){
+            favoriteToogleColor(e.target)
+        }
+    })
 }
-addCardFavoriteEvent();
+addCardFavoriteEvent()
+
 
