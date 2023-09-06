@@ -16,7 +16,6 @@ let cardsLength = document.getElementById("cardsLength");
 let dataLength = datos.length;
 cardsLength.innerHTML = dataLength;
 
-
 //*----------------------------------------
 
 //! Cards Template (elementHTML: colCard)
