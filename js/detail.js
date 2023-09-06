@@ -10,6 +10,11 @@ const param = new URLSearchParams(queryString)
 const dataDetail = param.get("id")
 const detail = datos.find(item => item._id === dataDetail) 
 
+//* Favorite
+const biClassFav = document.querySelector(".biFavorites");
+
+
+//! Card Template
 const createDetailTemplate = (item, current) => {
     let template = ''
     template = `
@@ -25,6 +30,7 @@ const createDetailTemplate = (item, current) => {
                 <div class="vr md-2"></div>
                 <div class="col-md-4">
                     <div class="card-body dataBody">
+                    <i class="bi bi-heart-fill biFavorite" id="iconfav"></i>
                         <h4 class="card-title text-center">
                             ${item.name}
                         </h4>
@@ -53,4 +59,20 @@ const renderDetailTemplate = (item, current, elementHTML) => {
     structure += createDetailTemplate(item, current)
     elementHTML.innerHTML = structure
 }
-console.log(renderDetailTemplate(detail, current, detailCard ))
+renderDetailTemplate(detail, current, detailCard )
+
+
+//*--------------------------------------------
+
+//! Favorites
+function favoriteToogleColor(biClassFav) {
+    biClassFav.classList.toggle('biFavRed')
+}
+
+function addCardFavoriteEvent() {
+    document.addEventListener('click',(e) => { 
+        if(e.target.classList.contains('biFavorite'))
+        favoriteToogleColor(e.target)
+    });
+}
+addCardFavoriteEvent();
