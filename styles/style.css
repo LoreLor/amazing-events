@@ -339,6 +339,25 @@ table .row-aux td {
     color: #FFFFFF !important;
 }
 
+.btn-up a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom:1rem;
+    right: 5vw;
+    border: 2px solid var(--dark-violet);
+    border-radius: 50%;
+    background-color: var(--light-magenta);
+    box-shadow: -10px 13px 15px 1px var(--dark-violet2);
+    width: 3.8rem;
+    height:3.8rem ;
+    text-decoration: none;
+    font-weight: 700;
+    color: var(--dark-violet2);
+}
+
+
 
 
 /** MEDIA QUERIES */
@@ -348,9 +367,15 @@ table .row-aux td {
         display: flex;
         height: 67vh;
     }
-    .card-content {
+    .card-content .card{
         padding: 0 3rem;
         justify-content: center;
+    
+    }
+
+    .card-content .card img {
+        width: 100%;
+        
     }
 
     .dataBody {
