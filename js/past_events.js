@@ -125,10 +125,8 @@ renderSearch(contentCheck);
 
 //*--------------------------------------------
 
-
 //! Filters & Listeners
-
-function checksFilter() {
+function checksFilter(arrPast) {
     // checks seleccionados
     const nodeListChecks = document.querySelectorAll(
         'input[type="checkbox"]:checked'
@@ -137,27 +135,27 @@ function checksFilter() {
     let arrChecks = Array.from(nodeListChecks).map((input) => input.value);
 
     let itemFiltered = arrChecks.length > 0
-            ? filterPast.filter((item) => arrChecks.includes(item.category))
-            : filterPast;
+            ? arrPast.filter((item) => arrChecks.includes(item.category))
+            : arrPast;
 
     return itemFiltered;
 }
 
-function searchFilter() {
+function searchFilter(arrPast) {
     const inputValue = document.querySelector('input[type="search"]');
     const valueSearch = inputValue.value.toLowerCase();
     const normalizedValue = valueSearch.charAt(0).toUpperCase() + valueSearch.slice(1) || valueSearch;
 
     let inputSearch = normalizedValue !== ''? 
-        filterPast.filter(item => (item.name).includes(normalizedValue))
-        : filterPast;
+        arrPast.filter(item => (item.name).includes(normalizedValue))
+        : arrPast;
         
     return inputSearch
 }
 
-function combineFilters (){
-    let checksFilterResults = checksFilter()
-    let searchFilterResult = searchFilter()
+function combineFilters (arrPast){
+    let checksFilterResults = checksFilter(arrPast)
+    let searchFilterResult = searchFilter(arrPast)
 
     let combined = checksFilterResults.filter(item => searchFilterResult.includes(item))
 
@@ -168,20 +166,20 @@ function combineFilters (){
     return combined
 }
 
-const handlerChange = () => {
-    let combineResults = combineFilters()
+const handlerChange = (arrPast, elementHTML) => {
+    let combineResults = combineFilters(arrPast)
         if(combineResults.length === 0){
             swal("Event is not found, try with other name...");
         }
     
-    renderCards(combineResults, colCard)
+    renderCards(combineResults, elementHTML)
 }
 
 const handlerSubmit = (e) => {
     e.preventDefault();
-    contentCheck.addEventListener('input', handlerChange)
+    contentCheck.addEventListener('input', () => handlerChange(filterPast, colCard))
 }
-contentCheck.addEventListener('change', handlerChange)
+contentCheck.addEventListener('change', () => handlerChange(filterPast, colCard))
 contentCheck.addEventListener('submit', handlerSubmit)
 
 //*--------------------------------------------

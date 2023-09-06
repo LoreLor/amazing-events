@@ -4,7 +4,6 @@ const colCard = document.getElementById("colCard");
 //* Checkboxs & Search Content
 const contentCheck = document.getElementById("contenCheck");
 
-
 //* Favoritos
 const biClassFav = document.querySelector('.biFavorite'); 
 
@@ -13,7 +12,7 @@ const fechaActual = data.currentDate;
 const datos = data.events;
 
 //* Events Lengths
-const cardsLength = document.getElementById("cardsLength");
+let cardsLength = document.getElementById("cardsLength");
 let dataLength = datos.length;
 cardsLength.innerHTML = dataLength;
 
@@ -23,9 +22,9 @@ cardsLength.innerHTML = dataLength;
 //! Cards Template (elementHTML: colCard)
 const createTemplate = (item) => {
     let template = "";
-    template += `<div class="col-md-6">
-        <div class="card h-100" id="card">
-            <img src=${item.image} class="card-img-top" alt=${item.name}>
+    template += `<div class="col-md-6 px-2">
+        <div class="card h-100">
+            <img src=${item.image} class="card-img-top" alt="imagen 2">
             <i class="bi bi-heart-fill biFavorite" id="iconfav"></i>
             <div class="card-body">
                 <h5 class="card-title">${item.name}</h5>
@@ -36,7 +35,7 @@ const createTemplate = (item) => {
             <div class="hstack gap-3 text-center px-2 py-3">
                 <div class="p-2 fw-bold">$ ${item.price}</div>
                 <div class="p-2 ms-auto">
-                    <a href="details.html?id=${item._id}">Details</a>      
+                <a href="details.html?id=${item._id}">Details</a>      
                 </div>
             </div>
         </div>
@@ -123,7 +122,7 @@ renderSearch(contentCheck);
 
 //! Filters & Listeners
 
-function cheksFiltered() {
+function cheksFiltered(arr) {
     // checks seleccionados
     const nodeListChecks = document.querySelectorAll('input[type="checkbox"]:checked');
 
@@ -132,13 +131,13 @@ function cheksFiltered() {
 
     //filter
     let itemsFiltered = arrChecks.length > 0
-            ? datos.filter((item) => arrChecks.includes(item.category))
-            : datos;
+            ? arr.filter((item) => arrChecks.includes(item.category))
+            : arr;
 
     return itemsFiltered;
 }
 
-function searchFiltered() {
+function searchFiltered(arr) {
     // capturo el valor
     const inputValue = document.querySelector('input[type="search"]');
     const valueSearch = inputValue.value.toLowerCase();
@@ -146,41 +145,42 @@ function searchFiltered() {
     const normalizedValue = valueSearch.charAt(0).toUpperCase() + valueSearch.slice(1) || valueSearch;
     // filter
     let inputSearch = normalizedValue !== ""
-            ? datos.filter((item) => (item.name).includes(normalizedValue))
-            : datos;
+            ? arr.filter((item) => (item.name).includes(normalizedValue))
+            : arr;
             
     return inputSearch;
 }
 
-function combineFilters (){
+function combineFilters (arr){
     // me traigo las funciones de filtrado
-    let checksFilterResults = cheksFiltered()
-    let searchFilterResult = searchFiltered()
+    let checksFilterResults = cheksFiltered(arr)
+    let searchFilterResult = searchFiltered(arr)
 
     let combined = checksFilterResults.filter(item => searchFilterResult.includes(item))
 
+    let cardsLength = document.getElementById("cardsLength");
     let dataLength = combined.length;
     cardsLength.innerHTML = dataLength;
 
     return combined
 }
 
-const handlerChange = () => {
-    let combineResults = combineFilters()
+const handlerChange = (arr, elementHTML) => {
+    let combineResults = combineFilters(arr)
         if(combineResults.length === 0){
             swal("Event is not found, try with other name...");
         }
 
-    renderCards(combineResults, colCard);
+    renderCards(combineResults, elementHTML)
 };
 
 const handlerSubmit = (e) => {
     e.preventDefault();
-    contentCheck.addEventListener('input', handlerChange)
+    contentCheck.addEventListener('input', () => handlerChange(datos, colCard))
 };
 
 // inyecto los escuchadores
-contentCheck.addEventListener("change", handlerChange);
+contentCheck.addEventListener("change", () => handlerChange(datos, colCard));
 contentCheck.addEventListener("submit", handlerSubmit);
 
 //*----------------------------------------

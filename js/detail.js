@@ -1,6 +1,7 @@
 const detailCard = document.getElementById('detailCard')
 
 const datos = data.events
+const current = data.currentDate
 
 const queryString = location.search
 const param = new URLSearchParams(queryString)
@@ -9,7 +10,7 @@ const param = new URLSearchParams(queryString)
 const dataDetail = param.get("id")
 const detail = datos.find(item => item._id === dataDetail) 
 
-const createDetailTemplate = (item) => {
+const createDetailTemplate = (item, current) => {
     let template = ''
     template = `
         <div class="card w-100">
@@ -31,7 +32,13 @@ const createDetailTemplate = (item) => {
                             <li>Date:: ${item.date}</li>
                             <li>Place: ${item.place}</li>
                             <li>Capacity: ${item.capacity}</li>
-                            <li>Assistance: ${item.assistance}</li>
+                            <li>
+                                ${item.date < current ? 
+                                    `Assistance: ${item.assistance}`
+                                : `Estimate: ${item.estimate}`
+                                }
+                            </li>
+                            
                         </ul>
                     </div>
                 </div>
@@ -41,9 +48,9 @@ const createDetailTemplate = (item) => {
         return template
 }
 
-const renderDetailTemplate = (item, elementHTML) => {
+const renderDetailTemplate = (item, current, elementHTML) => {
     let structure = ''
-    structure += createDetailTemplate(item)
+    structure += createDetailTemplate(item, current)
     elementHTML.innerHTML = structure
 }
-renderDetailTemplate(detail, detailCard )
+console.log(renderDetailTemplate(detail, current, detailCard ))
