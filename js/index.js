@@ -46,9 +46,8 @@ const renderCards = (array, elementHTML) => {
     let structure = "";
     array.forEach((item) => {
         structure += createTemplate(item);
-        
+        elementHTML.innerHTML = structure;     
     });
-    elementHTML.innerHTML = structure;
     return structure
 };
 
