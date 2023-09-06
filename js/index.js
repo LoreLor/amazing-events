@@ -199,7 +199,7 @@ function favoriteToggleColor(biClassFav, arr) {
     }else{
         favorites= favorites.filter(fav => fav._id !== eventItem._id)
     }
-    console.log('cardItem :>> ', favorites)
+    console.log('favorites :>> ', favorites)
 }
 
 // agrego el evento a la card
