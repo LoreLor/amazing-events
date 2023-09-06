@@ -18,7 +18,7 @@ const biClassFav = document.querySelector(".biFavorites");
 const createDetailTemplate = (item, current) => {
     let template = ''
     template = `
-        <div class="card w-100">
+        <div class="card w-100" key=${item._id}>
             <div class="row g-0 align-item-center justify-content-evenly align-content-around">
                 <div class="col-md-6">
                     <img
@@ -65,14 +65,26 @@ renderDetailTemplate(detail, current, detailCard )
 //*--------------------------------------------
 
 //! Favorites
-function favoriteToogleColor(biClassFav) {
-    biClassFav.classList.toggle('biFavRed')
+let favorites = []
+function favoriteToggleColor(biClassFav, arr) {
+    const toggleColor= biClassFav.classList.toggle('biFavRed')
+    const cardItem = biClassFav.closest('.card');
+
+    let eventItem = arr.find(ev => cardItem.getAttribute('key') === ev._id)
+
+    if(toggleColor){
+        favorites.push(eventItem)
+        
+    }else{
+        favorites= favorites.filter(fav => fav._id !== eventItem._id)
+    }
+    console.log('cardItem :>> ', favorites)
 }
 
 function addCardFavoriteEvent() {
     document.addEventListener('click',(e) => { 
         if(e.target.classList.contains('biFavorite'))
-        favoriteToogleColor(e.target)
+        favoriteToggleColor(e.target, datos)
     });
 }
 addCardFavoriteEvent();

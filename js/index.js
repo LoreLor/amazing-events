@@ -22,7 +22,7 @@ cardsLength.innerHTML = dataLength;
 const createTemplate = (item) => {
     let template = "";
     template += `<div class="col-md-6 px-2">
-        <div class="card h-100">
+        <div class="card h-100" key=${item._id} data-favorite="false">
             <img src=${item.image} class="card-img-top" alt="imagen 2">
             <i class="bi bi-heart-fill biFavorite" id="iconfav"></i>
             <div class="card-body">
@@ -185,18 +185,29 @@ contentCheck.addEventListener("submit", handlerSubmit);
 //*----------------------------------------
 
 //! Favorites
-// cambio el color
-function favoriteToggleColor(biClassFav) {
-    biClassFav.classList.toggle('biFavRed')
+
+let favorites = []
+function favoriteToggleColor(biClassFav, arr) {
+    const toggleColor= biClassFav.classList.toggle('biFavRed')
+    const cardItem = biClassFav.closest('.card');
+
+    let eventItem = arr.find(ev => cardItem.getAttribute('key') === ev._id)
+
+    if(toggleColor){
+        favorites.push(eventItem)
+        
+    }else{
+        favorites= favorites.filter(fav => fav._id !== eventItem._id)
+    }
+    console.log('cardItem :>> ', favorites)
 }
 
 // agrego el evento a la card
 function addCardFavoriteEvent() {
     document.addEventListener('click', (e) => {
         if(e.target.classList.contains('biFavorite')){
-            favoriteToggleColor(e.target)
+            favoriteToggleColor(e.target, datos)
         }
     })
 }
 addCardFavoriteEvent()
-
