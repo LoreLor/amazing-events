@@ -50,9 +50,7 @@ const renderCards = (array, elementHTML) => {
     });
     return structure
 };
-
 renderCards(datos, colCard);
-
 
 
 //*----------------------------------------

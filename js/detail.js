@@ -62,7 +62,6 @@ const renderDetailTemplate = (item, current, elementHTML) => {
 }
 renderDetailTemplate(detail, current, detailCard )
 
-
 //*--------------------------------------------
 
 //! Favorites

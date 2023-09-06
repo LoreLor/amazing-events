@@ -15,7 +15,6 @@ const datos = data.events;
 const cardsLength = document.getElementById("cardsLength");
 
 
-
 //! Filtrado de Proximas fechas
 const filterComing = datos.filter((item) => item.date >= fechaActual);
 // console.log(filterComing);
@@ -168,7 +167,6 @@ function combineFilters (arrCom){
 
     return combined
 }
-
 
 const handlerChange = (arrCom, elementHTML) => {
     let combineResults = combineFilters(arrCom)
