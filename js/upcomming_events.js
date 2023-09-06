@@ -88,8 +88,9 @@ const renderChecks = (arr, elementHTML) => {
     let structure = "";
     arr.forEach((item) => {
         structure += createCheckTemplates(item);
+        elementHTML.innerHTML = structure;
     });
-    elementHTML.innerHTML = structure;
+    return structure
 };
 renderChecks(filterCategories, contentCheck);
 
@@ -123,6 +124,7 @@ const renderSearch = (elementHTML) => {
     let structure = "";
     structure += createSearchTemplate();
     elementHTML.innerHTML += structure;
+    return structure
 };
 renderSearch(contentCheck);
 
