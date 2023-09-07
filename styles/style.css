@@ -48,6 +48,9 @@ body {
     font-weight: 600 !important;
 }
 
+#nav-fav {
+    font-size:10rem !important;
+}
 
 /** MAIN  */
 .main-home,
@@ -175,6 +178,7 @@ body {
     cursor: pointer;
 }
 
+/*? Favorites */
 .biFavorite:hover {
     animation: bounce 2s ease-in-out;
 }
@@ -185,6 +189,22 @@ body {
 
 .biFavRed:hover {
     animation: bounce 2s ease-in-out;
+}
+
+.open {
+    display: block !important;
+    position:sticky;
+    top: 0;
+    right: 0; 
+    width: 300px;
+    background-color: var(--dark-violet-transparent);
+    box-shadow: 0 0 10px var(--dark-violet2);
+    transition: right 0.3s ease-in-out;
+    z-index: 3;
+}
+
+.closed {
+    display: none;
 }
 
 @keyframes bounce {
@@ -339,25 +359,24 @@ table .row-aux td {
     color: #FFFFFF !important;
 }
 
+/** BUTTON UP */
 .btn-up a{
     display: flex;
     justify-content: center;
     align-items: center;
     position: fixed;
     bottom:1rem;
-    right: 5vw;
+    right: 6.5vw;
     border: 2px solid var(--dark-violet);
     border-radius: 50%;
     background-color: var(--light-magenta);
-    box-shadow: -10px 13px 15px 1px var(--dark-violet2);
+    box-shadow: -8px 13px 15px 1px var(--dark-violet2);
     width: 3.8rem;
     height:3.8rem ;
     text-decoration: none;
     font-weight: 700;
     color: var(--dark-violet2);
 }
-
-
 
 
 /** MEDIA QUERIES */
@@ -408,6 +427,14 @@ table .row-aux td {
 
     footer{
         width: 100%;
+    }
+
+    .fav-aside {
+        right: 5rem;
+        z-index: 3;
+    }
+    .closed {
+        display: none;
     }
     
 }
@@ -464,5 +491,26 @@ table .row-aux td {
 
     footer{
         width: 100%;
+    }
+
+    .open {
+        display: block !important;
+        position: fixed;
+        top: 5.5rem;
+        right: 5rem; 
+        width: 30vw;
+        height: 90%;
+        padding-right: 2rem ;
+        padding-top: 2rem;
+        gap: 1rem;
+        overflow-y: scroll;
+    }
+
+    #fav-aside{
+        display: none;
+    }
+    
+    .closed {
+        display: none;
     }
 }
