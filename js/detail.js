@@ -65,26 +65,34 @@ renderDetailTemplate(detail, current, detailCard )
 //*--------------------------------------------
 
 //! Favorites
-let favorites = []
+let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
 function favoriteToggleColor(biClassFav, arr) {
-    const toggleColor= biClassFav.classList.toggle('biFavRed')
+    const toggleColor = biClassFav.classList.toggle('biFavRed');
     const cardItem = biClassFav.closest('.card');
 
-    let eventItem = arr.find(ev => cardItem.getAttribute('key') === ev._id)
+    let eventItem = arr.find(ev => cardItem.getAttribute('key') === ev._id);
 
-    if(toggleColor){
-        favorites.push(eventItem)
-        
-    }else{
-        favorites= favorites.filter(fav => fav._id !== eventItem._id)
+    if (toggleColor) {
+        favorites.push(eventItem);
+    } else {
+        favorites = favorites.filter(fav => fav._id !== eventItem._id);
     }
-    console.log('favorites :>> ', favorites)
+
+    saveFavoritesToLocalStorage(favorites);
+    console.log('favorites :>> ', favorites);
+}
+
+function saveFavoritesToLocalStorage(favorites) {
+    localStorage.setItem('favorites', JSON.stringify(favorites));
 }
 
 function addCardFavoriteEvent() {
-    document.addEventListener('click',(e) => { 
-        if(e.target.classList.contains('biFavorite'))
-        favoriteToggleColor(e.target, datos)
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('biFavorite')) {
+            favoriteToggleColor(e.target, datos);
+        }
     });
 }
+
 addCardFavoriteEvent();

@@ -186,52 +186,41 @@ contentCheck.addEventListener("submit", handlerSubmit);
 //*----------------------------------------
 
 //! Favorites
+
 let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
-function favoriteToggleColor(biClassFav, arr, arrFav) {
-    const toggleColor= biClassFav.classList.toggle('biFavRed')
+function favoriteToggleColor(biClassFav, arr) {
+    const toggleColor = biClassFav.classList.toggle('biFavRed');
     const cardItem = biClassFav.closest('.card');
-    const favCards = document.getElementById("fav-cards")
+    const favEvent = document.getElementById('fav-cards')
 
-    let eventItem = arr.find(ev => cardItem.getAttribute('key') === ev._id)
+    let eventItem = arr.find(ev => cardItem.getAttribute('key') === ev._id);
 
-    if(toggleColor){
-        arrFav.push(eventItem)
-        addFavoriteStorage(arrFav)
-        
-    }else{
-        arrFav= arrFav.filter(fav => fav._id !== eventItem._id)
-        addFavoriteStorage(arrFav)
+    if (toggleColor) {
+        favorites.push(eventItem);
+    } else {
+        favorites = favorites.filter(fav => fav._id !== eventItem._id);
     }
-    renderCardsFavorite(arrFav, favCards)
 
-    if (arrFav.length === 0) {
-        localStorage.removeItem('favorites');
-    }
+    // Guardar el array de favoritos actualizado en el localStorage
+    saveFavoritesToLocalStorage(favorites);
+    console.log('favorites :>> ', favorites);
+    renderCardsFavorite(favorites, favEvent)
 }
 
-
-//* favoritos en localstorage
-function addFavoriteStorage(favorites) {
-    const favoriteJSON = JSON.stringify(favorites);
-    localStorage.setItem('favorites', favoriteJSON);
-} 
-
-function getFavoriteStorage(string) {
-    const favoriteJSON = localStorage.getItem(string);
-    return JSON.parse(favoriteJSON) || [];
+function saveFavoritesToLocalStorage(favorites) {
+    localStorage.setItem('favorites', JSON.stringify(favorites));
 }
-getFavoriteStorage('favorites')
 
-//* Agrego el evento a la card
 function addCardFavoriteEvent() {
     document.addEventListener('click', (e) => {
-        if(e.target.classList.contains('biFavorite')){
-            favoriteToggleColor(e.target, datos, favorites)
+        if (e.target.classList.contains('biFavorite')) {
+            favoriteToggleColor(e.target, datos, favorites);
         }
-    })
+    });
 }
-addCardFavoriteEvent()
+
+addCardFavoriteEvent();
 
 //* Aside Favorites 
 function asideToggleOpen(elementHTML){
