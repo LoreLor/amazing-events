@@ -193,10 +193,12 @@ body {
 
 .open {
     display: block !important;
-    position:sticky;
-    top: 0;
+    position: fixed;
+    top: 10rem;
     right: 0; 
+    height: 90%;
     width: 300px;
+    overflow-y: scroll;
     background-color: var(--dark-violet-transparent);
     box-shadow: 0 0 10px var(--dark-violet2);
     transition: right 0.3s ease-in-out;
@@ -514,3 +516,4 @@ table .row-aux td {
         display: none;
     }
 }
+

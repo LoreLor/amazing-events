@@ -280,7 +280,3 @@ function showFavoriteAside(arrFav){
 
 }
 showFavoriteAside(favorites)
-
-
-
-
