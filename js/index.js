@@ -1,18 +1,14 @@
 const datos = () => {
     //* Cards
     const colCard = document.getElementById("colCard");
-    
+    const cardsLength = document.getElementById("cardsLength");
     //* Checkboxs & Search Content
-    const contentCheck = document.getElementById("contenCheck");
-    
-    const biClassFav = document.querySelector('.biFavorite'); 
+    const contentCheck = document.getElementById("contenCheck"); 
     
     fetchData()
     .then((res) => res.events)
     .then((data) => {
-        
             console.log("data >> ", data);
-
             //! Cards Template (elementHTML: colCard)
             const createTemplate = (item) => {
                 let template = "";
@@ -36,6 +32,7 @@ const datos = () => {
                     </div>`;
                 return template;
             };
+
             const renderCards = (array, elementHTML) => {
                 let structure = "";
                 array.forEach((item) => {
@@ -44,6 +41,8 @@ const datos = () => {
                 });
                 return structure;
             };
+            
+          
             renderCards(data, colCard);
 
             //*----------------------------------------
@@ -111,12 +110,12 @@ const datos = () => {
                 elementHTML.innerHTML += structure; // concateno con la existente
                 return structure;
             };
+            
             renderSearch(contentCheck);
 
             //*----------------------------------------
 
             //! Filters & Listeners
-
             function cheksFiltered(arr) {
                 // checks seleccionados
                 const nodeListChecks = document.querySelectorAll(
@@ -150,9 +149,7 @@ const datos = () => {
                 // filter
                 let inputSearch =
                     normalizedValue !== ""
-                        ? arr.filter((item) =>
-                              item.name.includes(normalizedValue)
-                          )
+                        ? arr.filter(item =>item.name.includes(normalizedValue))
                         : arr;
 
                 return inputSearch;
@@ -189,7 +186,6 @@ const datos = () => {
                 );
             };
 
-            // inyecto los escuchadores
             contentCheck.addEventListener("change", () =>
                 handlerChange(data, colCard)
             );
@@ -200,26 +196,30 @@ const datos = () => {
            //! Favorites
             let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
-            function favoriteToggleColor(biClassFav) {
+            function favoriteToggleColor(biClassFav, data) {
                 const toggleColor = biClassFav.classList.toggle('biFavRed');
                 const cardItem = biClassFav.closest('.card');
                 const favEvent = document.getElementById('fav-cards');
 
-                if (!cardItem) return; // Si no hay una tarjeta, salimos
+                if (!cardItem) return; // Si no hay una tarjeta me voy
 
                 const eventId = cardItem.getAttribute('key');
                 const eventItem = data.find(ev => ev._id === Number(eventId));
                 const isFavorite = favorites.some(fav => fav._id === Number(eventId));
 
-                if (toggleColor && eventItem) {
+                if (toggleColor && eventItem && !isFavorite) {
                     favorites.push(eventItem);
                 } else if (!toggleColor && isFavorite) {
                     favorites = favorites.filter(fav => fav._id !== Number(eventId));
                 }
 
                 saveFavoritesToLocalStorage();
-
                 renderCardsFavorite(favorites, favEvent);
+
+                if (favorites.length === 0) {
+                    const asideFavorite = document.getElementById("fav-aside");
+                    asideFavorite.classList.remove("open");
+                }
 
                 return favorites;
             }
@@ -228,14 +228,14 @@ const datos = () => {
                 localStorage.setItem("favorites", JSON.stringify(favorites));
             }
 
-            function addCardFavoriteEvent() {
+            function addCardFavoriteEvent(data) {
                 document.addEventListener('click', (e) => {
                     if (e.target.classList.contains('biFavorite')) {
-                        favoriteToggleColor(e.target);
+                        favoriteToggleColor(e.target, data);
                     }
                 });
             }
-            addCardFavoriteEvent();
+            addCardFavoriteEvent(data);
 
             //* Aside Favorites
             function asideToggleOpen(elementHTML) {
@@ -262,15 +262,13 @@ const datos = () => {
 
                 showAside.addEventListener("click", toggleAside);
             }
-            showFavoriteAside();
 
-            const createTemplateFavorite = (item) => {
-                let template = "";
-                template = `
-                <li>
+            function createTemplateFavorite(item) {
+                const template = `
+                    <li>
                         <div class="card h-100" key=${item._id} data-favorite="true">
                             <img src=${item.image} class="card-img-top" alt="imagen 2">
-                            <i class="bi bi-heart-fill biFavorite" id="iconfav"></i>
+                            <i class="bi bi-heart-fill biFavorite biFavRed" id="iconfav"></i>
                             <div class="card-body">
                                 <h5 class="card-title">${item.name}</h5>
                                 <p class="card-text">
@@ -280,30 +278,55 @@ const datos = () => {
                             <div class="hstack gap-3 text-center px-2 py-3">
                                 <div class="p-2 fw-bold">$ ${item.price}</div>
                                 <div class="p-2 ms-auto">
-                                <a href="details.html?id=${item._id}">Details</a>      
+                                    <a href="details.html?id=${item._id}">Details</a>      
                                 </div>
                             </div>
                         </div>
-                        </li>
-                    `;
+                    </li>
+                `;
                 return template;
-            };
+            }
 
-            const renderCardsFavorite = (array, elementHTML) => {
+            function renderCardsFavorite(array, elementHTML) {
                 let structure = "";
                 array?.forEach((item) => {
                     structure += createTemplateFavorite(item);
                 });
                 elementHTML.innerHTML = structure;
-            };
+                return structure
+            }
+            showFavoriteAside();
 
-        
+
+            function classFavoriteHome() {
+                const favEvent = document.getElementById('fav-cards');
+                const cards = colCard.querySelectorAll('.card');
+            
+                cards.forEach((card) => {
+                    const eventId = card.getAttribute('key');
+                    const isFavorite = favorites.some((fav) => fav._id === Number(eventId));
+                    const heartIcon = card.querySelector('.biFavorite');
+            
+                    if (isFavorite) {
+                        heartIcon.classList.add('biFavRed');
+                    } else {
+                        heartIcon.classList.remove('biFavRed');
+                    }
+                })
+
+                renderCardsFavorite(favorites, favEvent);
+            }
+            classFavoriteHome()
+
+
             //* Events Lengths
-            let cardsLength = document.getElementById("cardsLength");
+
             let dataLength = data.length;
             cardsLength.innerHTML = dataLength;
         })
         .catch((err) => console.log(err));
 };
+
+
 
 datos();
