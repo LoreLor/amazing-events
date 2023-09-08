@@ -378,6 +378,7 @@ table .row-aux td {
     text-decoration: none;
     font-weight: 700;
     color: var(--dark-violet2);
+    z-index: 4;
 }
 
 
