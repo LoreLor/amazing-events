@@ -1,3 +1,9 @@
+const datos = () => {
+    fetchData()
+    .then(data =>  console.log('data >> ', data))
+
+}
+
 //* Cards
 const colCard = document.getElementById("colCard");
 
@@ -9,7 +15,7 @@ const biClassFav = document.querySelector(".biFavorites");
 
 //* Object elements: currentDate - events
 const fechaActual = data.currentDate;
-const datos = data.events;
+//const datos = data.events;
 
 //* Events Lengths
 const cardsLength = document.getElementById("cardsLength");

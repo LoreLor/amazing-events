@@ -5,7 +5,6 @@ const cardsLength = document.getElementById("cardsLength");
 const contentCheck = document.getElementById("contenCheck"); 
 
 const datos = () => {
-    
     fetchData()
     .then((res) => res.events)
     .then((data) => {
@@ -172,6 +171,7 @@ const datos = () => {
 };
 
 datos();
+
 
  //! Cards Template (elementHTML: colCard)
  const createTemplate = (item) => {

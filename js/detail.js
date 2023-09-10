@@ -6,7 +6,7 @@ const current = data.currentDate
 const queryString = location.search
 const param = new URLSearchParams(queryString)
 
-// el parametro identificador
+// obtengo el parametro identificador
 const dataDetail = param.get("id")
 const detail = datos.find(item => item._id === dataDetail) 
 

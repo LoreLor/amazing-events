@@ -5,10 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link
             rel="shortcut icon"
-            href="assets/favicon.png"
+            href="./assets/favicon.png"
             type="image/x-icon"
         >
-        <link rel="stylesheet" href="styles/style.css">
+        <link rel="stylesheet" href="./styles/style.css">
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
             rel="stylesheet"
@@ -28,9 +28,9 @@
             <header>
                 <nav class="navbar navbar-expand-lg bg-custom">
                     <div class="container-fluid">
-                        <a class="navbar-brand text-white-50" href="index.html">
+                        <a class="navbar-brand text-white-50" href="./index.html">
                             <img
-                                src="assets/amazing_brand.png"
+                                src="./assets/amazing_brand.png"
                                 alt="amazing brand"
                             >
                         </a>
@@ -53,7 +53,7 @@
                                     <a
                                         class="nav-link"
                                         aria-current="page"
-                                        href="index.html"
+                                        href="./index.html"
                                     >
                                         HOME
                                     </a>
@@ -61,18 +61,18 @@
                                 <li class="nav-item">
                                     <a
                                         class="nav-link"
-                                        href="upcomming_events.html"
+                                        href="./upcomming_events.html"
                                     >
                                         UPCOMING EVENTS
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="past_events.html">
+                                    <a class="nav-link" href="./past_events.html">
                                         PAST EVENTS
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="contact.html">
+                                    <a class="nav-link" href="./contact.html">
                                         CONTACT
                                     </a>
                                 </li>
@@ -120,7 +120,7 @@
                     <div class="carousel-inner">
                         <div class="carousel-item active">
                             <img
-                                src="assets/optional_banner_3.jpg"
+                                src="./assets/optional_banner_3.jpg"
                                 class="d-block w-100 h-100"
                                 alt="image3"
                             >
@@ -131,7 +131,7 @@
 
                         <div class="carousel-item">
                             <img
-                                src="assets/optional_banner_2.jpg"
+                                src="./assets/optional_banner_2.jpg"
                                 class="d-block w-100 h-100"
                                 alt="image2"
                             >
@@ -141,7 +141,7 @@
                         </div>
                         <div class="carousel-item">
                             <img
-                                src="assets/optional_banner_3.jpg"
+                                src="./assets/optional_banner_3.jpg"
                                 class="d-block w-100 h-100"
                                 alt="image3"
                             >
@@ -151,7 +151,7 @@
                         </div>      
                         <div class="carousel-item">
                             <img
-                                src="assets/optional_banner_1.jpg"
+                                src="./assets/optional_banner_1.jpg"
                                 class="d-block w-100 h-100"
                                 alt="image1"
                             >
@@ -189,7 +189,7 @@
 
                 <!-- Table -->
                 <div class="table-content p-3">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered table-hover" id="table-1">
                         <thead>
                             <tr>
                                 <th scope="col" colspan="3">
@@ -208,21 +208,20 @@
                                 <th scope="col">
                                     Events with larger % capacity
                                 </th>
+                            </tr>              
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
-                            <!-- Data aux para mantener mismo tamaño FIX-->
-                            <tr class="row-aux">
-                                <td>Categories</td>
-                                <td>Revenues</td>
-                                <td>Percentege</td>
-                            </tr>
-                        </tbody>
+                        </tbody> 
                     </table>
 
-                    <table class="table table-bordered">
+                    <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
                                 <th scope="col" colspan="3">
-                                    Upcommings events statistics by category
+                                    Past events Statistics by category
                                 </th>
                             </tr>
                         </thead>
@@ -230,26 +229,18 @@
                             <tr>
                                 <th scope="col">Categories</th>
                                 <th scope="col">Revenues</th>
-                                <th scope="col">Percentege of assistenace</th>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <th scope="col">Percentage of assistance</th>
                             </tr>
                         </tbody>
+                        <tbody id="table-3">
+                        </tbody>
                     </table>
-
-                    <table class="table table-bordered">
+                    
+                    <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
                                 <th scope="col" colspan="3">
-                                    Events Statistics
+                                    Upcomings events statistics by category
                                 </th>
                             </tr>
                         </thead>
@@ -257,20 +248,14 @@
                             <tr>
                                 <th scope="col">Categories</th>
                                 <th scope="col">Revenues</th>
-                                <th scope="col">Percentege of assistenace</th>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <th scope="col">Percentage of estimate</th>
                             </tr>
                         </tbody>
+                        <tbody id="table-2">
+                            
+                        </tbody>
                     </table>
+
                 </div>
             </main>
 
@@ -296,5 +281,7 @@
             integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
             crossorigin="anonymous"
         ></script>
+        <script src="./js/data_fetch.js"></script>
+        <script src="./js/stats.js"></script>
     </body>
 </html>

@@ -1,6 +1,7 @@
 :root {
     --magenta: #f7066a;
     --light-magenta:#d31262b6;
+    --magenta-transparent: #f8059377;
     --ligth-violet: #f0def3;
     --ligth-violet-transparent: #d0bdd4af;
     --dark-violet:#770b8d;
@@ -205,6 +206,10 @@ body {
     z-index: 3;
 }
 
+#fav-aside{
+    display: none;
+}
+
 .closed {
     display: none;
 }
@@ -328,18 +333,33 @@ footer>.hstack div .bi:hover,
 /** STATS */
 table{
     margin-bottom: 0 !important;
+    margin-top: 2rem;
     
 }
 thead tr th{
     background-color: var(--dark-gray) !important;
     color: var(--ligth-violet) !important;
-    width: 2.8rem;
-}
-tbody tr td {
-    height:2rem;
-    width: 2.8rem;
+    width: 33.33%;
+    font-size: 0.5rem;
 }
 
+tbody tr td {
+    height:2rem;
+    width: 33.33%;
+    font-size: 0.9rem !important;
+}
+
+.table-hover tbody tr:hover td {
+    font-weight: 700;
+    background-color: var(--magenta-transparent);
+    color: var(--dark-violet2);
+}
+
+.table-hover tbody tr:hover th{
+    background-color: var(--dark-violet2);
+    color: var(--ligth-violet);
+
+}
 /** FORM */
 .form-content form{
     background-color: var(--white-color);
@@ -357,9 +377,6 @@ tbody tr td {
     padding: 0.5rem 1rem;
 }
 
-table .row-aux td {
-    color: #FFFFFF !important;
-}
 
 /** BUTTON UP */
 .btn-up a{
@@ -411,17 +428,16 @@ table .row-aux td {
     }
 
     table{
-        font-size: 1rem;
+        font-size: 1.5rem;
     }
 
     table tr th {
         text-align: start;
+        font-size: 0.9rem;
     }
-
-    table tbody tr th {
-        text-align: center;
+    td{
+        font-size: 2rem !important;
     }
-
 
     .form-content form{
         width: 40vw;
@@ -436,6 +452,10 @@ table .row-aux td {
         right: 5rem;
         z-index: 3;
     }
+    #fav-aside{
+        display: none;
+    }
+    
     .closed {
         display: none;
     }
