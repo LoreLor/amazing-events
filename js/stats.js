@@ -163,18 +163,31 @@ function pastEventsStatistics(arr){
                 revenues: 0,
                 assistance: 0,
                 capacity: 0,
+                eventCount: 0,
                 percentageAssistance:0
             }
         }
-
+        
         acc[category].revenues += (price * assistance)
         acc[category].assistance += assistance
         acc[category].capacity += capacity
-        acc[category].percentageAssistance = (assistance/capacity)*100
+        acc[category].eventCount += 1;
         
+        const eventPercentage = (assistance / capacity) * 100;
+        acc[category].percentageAssistance += eventPercentage;
+
         return acc
     }, [])
+    //for in para arr y porque necesito acceder a las keyy dentro de ellas a las propiedades
+    for (let category in statistics) {
+        const { percentageAssistance, eventCount } = statistics[category];
+        //accedo a propiedad y le seteo el porcentaje
+        statistics[category].percentageAssistance = percentageAssistance / eventCount;
+    }
+
     return statistics
+
+    
 }
 
 function createTable3Template(keyItem, item) {
