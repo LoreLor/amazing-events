@@ -334,8 +334,8 @@ footer>.hstack div .bi:hover,
 table{
     margin-bottom: 0 !important;
     margin-top: 2rem;
-    
 }
+
 thead tr th{
     background-color: var(--dark-gray) !important;
     color: var(--ligth-violet) !important;
@@ -358,8 +358,9 @@ tbody tr td {
 .table-hover tbody tr:hover th{
     background-color: var(--dark-violet2);
     color: var(--ligth-violet);
-
 }
+
+
 /** FORM */
 .form-content form{
     background-color: var(--white-color);
@@ -510,6 +511,18 @@ tbody tr td {
     .card-content .card .vr{
         background-color: var(--dark-violet-transparent) !important;
         opacity: 1 !important;
+    }
+
+    table{
+        font-size: 2rem;
+    }
+
+    table tr th {
+        text-align: start;
+        font-size: 1rem;
+    }
+    td{
+        font-size: 2rem !important;
     }
 
     footer{

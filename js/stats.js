@@ -4,25 +4,21 @@ const datos = () => {
     .then(data => {
         const dataEvents = data.events
         const currentDate = data.currentDate
-        console.log('currentDate :>> ',currentDate);
-        console.log('dataEvents :>> ', dataEvents);
+
 
         //* Elementos HTML
         const cell1 = document.querySelector("#table-1 tbody tr:nth-child(2) td:nth-child(1)");
         const cell2 = document.querySelector("#table-1 tbody tr:nth-child(2) td:nth-child(2)");
         const cell3 = document.querySelector("#table-1 tbody tr:nth-child(2) td:nth-child(3)");
-
         
         const table2 = document.getElementById('table-2')
         const table3 = document.getElementById('table-3')
 
         //! Past Events
         const filterPast = dataEvents.filter(item => item.date < currentDate)
-        console.log('filterPast :>> ', filterPast);
+
         //! Upcoming Events
         const filterUpcoming = dataEvents.filter(item => item.date > currentDate)
-        console.log('com :>> ', filterUpcoming);
-        
 
         //! Mayor Asistencia
         const eventPlusAssistance = plusAssistanceEvent(filterPast)
@@ -36,10 +32,10 @@ const datos = () => {
         const highestCapacityEvent = plusCapacityEvent(dataEvents)
     
         // Variables de Asignacion a celdas segun posicion en tabla 1
-        const highestAssistanceEvent = `${eventPlusAssistance.name} ${percentAssistPlus}%`;
-        const lowestAssistanceEvent = `${minusAssistance.name} ${percentAssistMinus}%`;
-        const highestCapacity = `${highestCapacityEvent.name} ${highestCapacityEvent.capacity}`;
-        
+        const highestAssistanceEvent = `${eventPlusAssistance.name} - ${percentAssistPlus}%`;
+        const lowestAssistanceEvent = `${minusAssistance.name} - ${percentAssistMinus}%`;
+        const highestCapacity = `${highestCapacityEvent.name} - ${highestCapacityEvent.capacity}`;
+
         cell1.textContent = highestAssistanceEvent;
         cell2.textContent = lowestAssistanceEvent;
         cell3.textContent = highestCapacity;
@@ -52,12 +48,11 @@ const datos = () => {
         const arrTotalPerCategories = pastEventsStatistics(filterPast)
         renderTable3Template(arrTotalPerCategories, table3)
 
-        
     })  
     .catch(err => console.log('err :', err))
 }
-
 datos()
+
 
 //! Table-1
 function plusAssistanceEvent(arr) {
@@ -70,7 +65,6 @@ function plusAssistanceEvent(arr) {
             plusAssistanceEvent = item;
         }
     });
-
     return plusAssistanceEvent;
 }
 
@@ -127,8 +121,8 @@ function comingEventsStatistics(arr) {
         return acc;
     }, []);
 
-    //for in para objetos
-    for (const category in statistics) {
+    //for in para arr y porque necesito acceder a las keyy dentro de ellas a las propiedades
+    for (let category in statistics) {
         const { percentageEstimate, eventCount } = statistics[category];
         //accedo a propiedad y le seteo el porcentaje
         statistics[category].percentageEstimate = percentageEstimate / eventCount;
