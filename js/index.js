@@ -32,6 +32,7 @@ const datos = () => {
                 );
             };
 
+
             contentCheck.addEventListener("change", () =>
                 handlerChange(data, colCard)
             );
@@ -39,8 +40,8 @@ const datos = () => {
 
             //*----------------------------------------
 
+
            //! Favorites
-            
             function favoriteToggleColor(biClassFav, data) {
                 const toggleColor = biClassFav.classList.toggle('biFavRed');
                 const cardItem = biClassFav.closest('.card');
@@ -69,9 +70,11 @@ const datos = () => {
                 return favorites;
             }
 
+
             function saveFavoritesToLocalStorage() {
                 localStorage.setItem("favorites", JSON.stringify(favorites));
             }
+
 
             function addCardFavoriteEvent(data) {
                 document.addEventListener('click', (e) => {
@@ -81,6 +84,7 @@ const datos = () => {
                 });
             }
             addCardFavoriteEvent(data);
+
 
             //* Aside Favorites
             function asideToggleOpen(elementHTML) {
@@ -93,6 +97,7 @@ const datos = () => {
                 };
                 return toggleOpen;
             }
+
 
             function showFavoriteAside() {
                 const asideFavorite = document.getElementById("fav-aside");
@@ -107,6 +112,7 @@ const datos = () => {
 
                 showAside.addEventListener("click", toggleAside);
             }
+
 
             function createTemplateFavorite(item) {
                 const template = `
@@ -123,7 +129,7 @@ const datos = () => {
                             <div class="hstack gap-3 text-center px-2 py-3">
                                 <div class="p-2 fw-bold">$ ${item.price}</div>
                                 <div class="p-2 ms-auto">
-                                    <a href="details.html?id=${item._id}">Details</a>      
+                                    <a href="../details.html?id=${item._id}">Details</a>      
                                 </div>
                             </div>
                         </div>
@@ -131,6 +137,7 @@ const datos = () => {
                 `;
                 return template;
             }
+
 
             function renderCardsFavorite(array, elementHTML) {
                 let structure = "";
@@ -141,6 +148,7 @@ const datos = () => {
                 return structure
             }
             showFavoriteAside();
+
 
             function classFavoriteHome() {
                 const favEvent = document.getElementById('fav-cards');
@@ -163,7 +171,6 @@ const datos = () => {
             classFavoriteHome()
 
             //* Events Lengths
-
             let dataLength = data.length;
             cardsLength.innerHTML = dataLength;
         })

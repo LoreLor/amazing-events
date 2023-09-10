@@ -1,21 +1,64 @@
-const detailCard = document.getElementById('detailCard')
-
-const datos = data.events
-const current = data.currentDate
-
 const queryString = location.search
-const param = new URLSearchParams(queryString)
-
-// obtengo el parametro identificador
+let param = new URLSearchParams(queryString)
+//* Parametro identificador
 const dataDetail = param.get("id")
-const detail = datos.find(item => item._id === dataDetail) 
-
+//* Card
+const detailCard = document.getElementById('detailCard')
 //* Favorite
 const biClassFav = document.querySelector(".biFavorites");
 
 
+const datos = () => {
+    fetchData()
+    .then(res => res)
+    .then(data => {
+        const dataEvents = data.events
+        const currentDate = data.currentDate
+
+        const detail = dataEvents.find(item => Number(dataDetail) === Number(item._id)) 
+        
+        renderDetailTemplate(detail, currentDate, detailCard)
+
+        //! Favorites
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        function saveFavoritesToLocalStorage(favorites) {
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+        }
+
+        function favoriteToggleColor(biClassFav, arr) {
+            const toggleColor = biClassFav.classList.toggle('biFavRed');
+            const cardItem = biClassFav.closest('.card');
+
+            let eventItem = arr.find(ev => Number(cardItem.getAttribute('key')) === ev._id);
+
+            if (toggleColor) {
+                favorites.push(eventItem);
+            } else {
+                favorites = favorites.filter(fav => fav._id !== Number(eventItem._id));
+            }
+
+            saveFavoritesToLocalStorage(favorites);
+        }
+
+        function addCardFavoriteEvent() {
+            document.addEventListener('click', (e) => {
+                if (e.target.classList.contains('biFavorite')) {
+                    favoriteToggleColor(e.target, dataEvents);
+                }
+            });
+        }
+
+        addCardFavoriteEvent();
+    })
+    .catch(err=> console.log(err))
+}
+
+datos()
+
+//*--------------------------------------------
+
 //! Card Template
-const createDetailTemplate = (item, current) => {
+function createDetailTemplate(item, current){
     let template = ''
     template = `
         <div class="card w-100" key=${item._id}>
@@ -54,45 +97,14 @@ const createDetailTemplate = (item, current) => {
         return template
 }
 
-const renderDetailTemplate = (item, current, elementHTML) => {
+function renderDetailTemplate(item, current, elementHTML) {
     let structure = ''
     structure += createDetailTemplate(item, current)
     elementHTML.innerHTML = structure
     return structure
 }
-renderDetailTemplate(detail, current, detailCard )
 
 //*--------------------------------------------
 
-//! Favorites
-let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
-function favoriteToggleColor(biClassFav, arr) {
-    const toggleColor = biClassFav.classList.toggle('biFavRed');
-    const cardItem = biClassFav.closest('.card');
 
-    let eventItem = arr.find(ev => cardItem.getAttribute('key') === ev._id);
-
-    if (toggleColor) {
-        favorites.push(eventItem);
-    } else {
-        favorites = favorites.filter(fav => fav._id !== eventItem._id);
-    }
-
-    saveFavoritesToLocalStorage(favorites);
-    console.log('favorites :>> ', favorites);
-}
-
-function saveFavoritesToLocalStorage(favorites) {
-    localStorage.setItem('favorites', JSON.stringify(favorites));
-}
-
-function addCardFavoriteEvent() {
-    document.addEventListener('click', (e) => {
-        if (e.target.classList.contains('biFavorite')) {
-            favoriteToggleColor(e.target, datos);
-        }
-    });
-}
-
-addCardFavoriteEvent();

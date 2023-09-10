@@ -40,7 +40,7 @@ const createCardTemplate = (item) => {
             <div class="hstack gap-3 text-center px-2 py-3">
                 <div class="p-2 fw-bold">$ ${item.price}</div>
                 <div class="p-2 ms-auto">
-                <a href="details.html?id=${item._id}">Details</a>      
+                <a href="../details.html?id=${item._id}">Details</a>      
                 </div>
             </div>
         </div>
