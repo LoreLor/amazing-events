@@ -32,14 +32,12 @@ const datos = () => {
                 );
             };
 
-
             contentCheck.addEventListener("change", () =>
                 handlerChange(data, colCard)
             );
             contentCheck.addEventListener("submit", handlerSubmit);
 
             //*----------------------------------------
-
 
            //! Favorites
             function favoriteToggleColor(biClassFav, data) {
@@ -66,15 +64,12 @@ const datos = () => {
                     const asideFavorite = document.getElementById("fav-aside");
                     asideFavorite.classList.remove("open");
                 }
-
                 return favorites;
             }
-
 
             function saveFavoritesToLocalStorage() {
                 localStorage.setItem("favorites", JSON.stringify(favorites));
             }
-
 
             function addCardFavoriteEvent(data) {
                 document.addEventListener('click', (e) => {
@@ -84,7 +79,6 @@ const datos = () => {
                 });
             }
             addCardFavoriteEvent(data);
-
 
             //* Aside Favorites
             function asideToggleOpen(elementHTML) {
@@ -97,7 +91,6 @@ const datos = () => {
                 };
                 return toggleOpen;
             }
-
 
             function showFavoriteAside() {
                 const asideFavorite = document.getElementById("fav-aside");
@@ -113,42 +106,7 @@ const datos = () => {
                 showAside.addEventListener("click", toggleAside);
             }
 
-
-            function createTemplateFavorite(item) {
-                const template = `
-                    <li>
-                        <div class="card h-100" key=${item._id} data-favorite="true">
-                            <img src=${item.image} class="card-img-top" alt="imagen 2">
-                            <i class="bi bi-heart-fill biFavorite biFavRed" id="iconfav"></i>
-                            <div class="card-body">
-                                <h5 class="card-title">${item.name}</h5>
-                                <p class="card-text">
-                                    ${item.description}
-                                </p>
-                            </div>
-                            <div class="hstack gap-3 text-center px-2 py-3">
-                                <div class="p-2 fw-bold">$ ${item.price}</div>
-                                <div class="p-2 ms-auto">
-                                    <a href="../details.html?id=${item._id}">Details</a>      
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                `;
-                return template;
-            }
-
-
-            function renderCardsFavorite(array, elementHTML) {
-                let structure = "";
-                array?.forEach((item) => {
-                    structure += createTemplateFavorite(item);
-                });
-                elementHTML.innerHTML = structure;
-                return structure
-            }
             showFavoriteAside();
-
 
             function classFavoriteHome() {
                 const favEvent = document.getElementById('fav-cards');
@@ -334,3 +292,37 @@ const handlerChange = (arr, elementHTML) => {
     }
     renderCards(combineResults, elementHTML);
 };
+
+//! Favorite
+function createTemplateFavorite(item) {
+    const template = `
+        <li>
+            <div class="card h-100" key=${item._id} data-favorite="true">
+                <img src=${item.image} class="card-img-top" alt="imagen 2">
+                <i class="bi bi-heart-fill biFavorite biFavRed" id="iconfav"></i>
+                <div class="card-body">
+                    <h5 class="card-title">${item.name}</h5>
+                    <p class="card-text">
+                        ${item.description}
+                    </p>
+                </div>
+                <div class="hstack gap-3 text-center px-2 py-3">
+                    <div class="p-2 fw-bold">$ ${item.price}</div>
+                    <div class="p-2 ms-auto">
+                        <a href="../details.html?id=${item._id}">Details</a>      
+                    </div>
+                </div>
+            </div>
+        </li>
+    `;
+    return template;
+}
+
+function renderCardsFavorite(array, elementHTML) {
+    let structure = "";
+    array?.forEach((item) => {
+        structure += createTemplateFavorite(item);
+    });
+    elementHTML.innerHTML = structure;
+    return structure
+}

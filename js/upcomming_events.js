@@ -41,19 +41,35 @@ const datos = () => {
             localStorage.setItem('favorites', JSON.stringify(favorites));
         }
 
-        function favoriteToggleColor(biClassFav, arr) {
+        function favoriteToggleColor(biClassFav, data) {
             const toggleColor = biClassFav.classList.toggle('biFavRed');
             const cardItem = biClassFav.closest('.card');
+            const favEvent = document.getElementById('fav-cards');
 
-            let eventItem = arr.find(ev => Number(cardItem.getAttribute('key')) === ev._id);
+            if (!cardItem) return; // Si no hay una tarjeta me voy
 
-            if (toggleColor) {
+            const eventId = cardItem.getAttribute('key');
+            const eventItem = data.find(ev => ev._id === Number(eventId));
+            const isFavorite = favorites.some(fav => fav._id === Number(eventId));
+
+            if (toggleColor && eventItem && !isFavorite) {
                 favorites.push(eventItem);
-            } else {
-                favorites = favorites.filter(fav => fav._id !== Number(eventItem._id));
+            } else if (!toggleColor && isFavorite) {
+                favorites = favorites.filter(fav => fav._id !== Number(eventId));
             }
 
-            saveFavoritesToLocalStorage(favorites);
+            saveFavoritesToLocalStorage();
+            renderCardsFavorite(favorites, favEvent);
+
+            if (favorites.length === 0) {
+                const asideFavorite = document.getElementById("fav-aside");
+                asideFavorite.classList.remove("open");
+            }
+            return favorites;
+        }
+
+        function saveFavoritesToLocalStorage() {
+            localStorage.setItem("favorites", JSON.stringify(favorites));
         }
 
         function addCardFavoriteEvent() {
@@ -63,8 +79,8 @@ const datos = () => {
                 }
             });
         }
-
         addCardFavoriteEvent();
+
         let dataLength = filterComing.length;
         cardsLength.innerHTML = dataLength;
     })
