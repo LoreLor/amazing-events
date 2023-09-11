@@ -54,7 +54,6 @@ const datos = () => {
 datos()
 
 //*------------------------------------------
-
 //! Table-1
 function plusAssistanceEvent(arr) {
     let plusAssistanceEvent = null;

@@ -7,23 +7,92 @@ const contentCheck = document.getElementById("contenCheck");
 //* Favorite
 const biClassFav = document.querySelector(".biFavorites");
 
-//* Object elements: currentDate - events
-const fechaActual = data.currentDate;
-const datos = data.events;
-
 //* Events Lengths
 const cardsLength = document.getElementById("cardsLength");
 
+const datos = () => {
+    fetchData()
+    .then(res => res)
+    .then(data => {
+        const dataEvents = data.events
+        const currentDate = data.currentDate
 
+        const filterPast = dataEvents.filter(item => item.date < currentDate)
+
+        renderCards(filterPast, colCard);
+
+        const filterCategories = [...new Set(dataEvents.map((item) => item.category)),
+        ].sort();
+
+        renderChecks(filterCategories, contentCheck);
+        renderSearch(contentCheck);
+
+        const handlerSubmit = (e) => {
+            e.preventDefault();
+            contentCheck.addEventListener('input', () => handlerChange(filterPast, colCard))
+        }
+        contentCheck.addEventListener('change', () => handlerChange(filterPast, colCard))
+        contentCheck.addEventListener('submit', handlerSubmit)
+
+        //! Favorites
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        function saveFavoritesToLocalStorage(favorites) {
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+        }
+
+        function favoriteToggleColor(biClassFav, data) {
+            const toggleColor = biClassFav.classList.toggle('biFavRed');
+            const cardItem = biClassFav.closest('.card');
+            const favEvent = document.getElementById('fav-cards');
+
+            if (!cardItem) return; // Si no hay una tarjeta me voy
+
+            const eventId = cardItem.getAttribute('key');
+            const eventItem = data.find(ev => ev._id === Number(eventId));
+            const isFavorite = favorites.some(fav => fav._id === Number(eventId));
+
+            if (toggleColor && eventItem && !isFavorite) {
+                favorites.push(eventItem);
+            } else if (!toggleColor && isFavorite) {
+                favorites = favorites.filter(fav => fav._id !== Number(eventId));
+            }
+
+            saveFavoritesToLocalStorage();
+            //renderCardsFavorite(favorites, favEvent);
+
+            if (favorites.length === 0) {
+                const asideFavorite = document.getElementById("fav-aside");
+                asideFavorite.classList.remove("open");
+            }
+            return favorites;
+        }
+
+        function saveFavoritesToLocalStorage() {
+            localStorage.setItem("favorites", JSON.stringify(favorites));
+        }
+
+        function addCardFavoriteEvent() {
+            document.addEventListener('click', (e) => {
+                if (e.target.classList.contains('biFavorite')) {
+                    favoriteToggleColor(e.target, dataEvents);
+                }
+            });
+        }
+        addCardFavoriteEvent();
+
+        let dataLength = filterPast.length
+        cardsLength.innerHTML = dataLength
+    })
+    .catch(err => console.log('err >> ', err))
+}
+datos()
 //! Filtrado Fechas Pasadas
-const filterPast = datos.filter(item => item.date < fechaActual)
+
 
 //! Cantidad de cards
-let dataLength = filterPast.length
-cardsLength.innerHTML = dataLength
+
 
 //*-------------------------------------------
-
 //! Cards Template 
 const createCardTemplate = (item) => {
     let template = "";
@@ -56,15 +125,9 @@ const renderCards = (arr, elementHTML) => {
     });
     return structure
 };
-renderCards(filterPast, colCard);
 
 //*-------------------------------------------
-
 //! Checkbox Template 
-const filterCategories = [...new Set(datos.map((item) => item.category)),
-].sort();
-
-
 const createCheckTemplates = (item) => {
     let template = "";
     template += `
@@ -91,10 +154,8 @@ const renderChecks = (arr, elementHTML) => {
     });
     return structure
 };
-renderChecks(filterCategories, contentCheck);
 
 //*--------------------------------------------
-
 //! Search Template 
 const createSearchTemplate = () => {
     let template = "";
@@ -124,10 +185,8 @@ const renderSearch = (elementHTML) => {
     elementHTML.innerHTML += structure;
     return structure
 };
-renderSearch(contentCheck);
 
 //*--------------------------------------------
-
 //! Filters & Listeners
 function checksFilter(arrPast) {
     // checks seleccionados
@@ -174,44 +233,40 @@ const handlerChange = (arrPast, elementHTML) => {
         if(combineResults.length === 0){
             swal("Event is not found, try with other name...");
         }
-    
     renderCards(combineResults, elementHTML)
 }
 
-const handlerSubmit = (e) => {
-    e.preventDefault();
-    contentCheck.addEventListener('input', () => handlerChange(filterPast, colCard))
-}
-contentCheck.addEventListener('change', () => handlerChange(filterPast, colCard))
-contentCheck.addEventListener('submit', handlerSubmit)
+// //*--------------------------------------------
+// //! Favorite
+// function createTemplateFavorite(item) {
+//     const template = `
+//         <li>
+//             <div class="card h-100" key=${item._id} data-favorite="true">
+//                 <img src=${item.image} class="card-img-top" alt="imagen 2">
+//                 <i class="bi bi-heart-fill biFavorite biFavRed" id="iconfav"></i>
+//                 <div class="card-body">
+//                     <h5 class="card-title">${item.name}</h5>
+//                     <p class="card-text">
+//                         ${item.description}
+//                     </p>
+//                 </div>
+//                 <div class="hstack gap-3 text-center px-2 py-3">
+//                     <div class="p-2 fw-bold">$ ${item.price}</div>
+//                     <div class="p-2 ms-auto">
+//                         <a href="../details.html?id=${item._id}">Details</a>      
+//                     </div>
+//                 </div>
+//             </div>
+//         </li>
+//     `;
+//     return template;
+// }
 
-//*--------------------------------------------
-
-//! Favorites
-let favorites = []
-function favoriteToggleColor(biClassFav, arr) {
-    const toggleColor= biClassFav.classList.toggle('biFavRed')
-    const cardItem = biClassFav.closest('.card');
-
-
-    let eventItem = arr.find(ev => cardItem.getAttribute('key') === ev._id)
-    if(toggleColor){
-            favorites.push(eventItem);
-    } else {
-        favorites = favorites.filter(fav => fav._id !== eventItem._id);
-    }
-    console.log('favorites: >>', favorites);
-}
-
-
-// agrego el evento a la card
-function addCardFavoriteEvent() {
-    document.addEventListener('click', (e) => {
-        if(e.target.classList.contains('biFavorite')){
-            favoriteToggleColor(e.target, filterPast)
-        }
-    })
-}
-addCardFavoriteEvent()
-
-
+// function renderCardsFavorite(array, elementHTML) {
+//     let structure = "";
+//     array?.forEach((item) => {
+//         structure += createTemplateFavorite(item);
+//     });
+//     elementHTML.innerHTML = structure;
+//     return structure
+// }
