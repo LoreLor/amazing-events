@@ -350,7 +350,7 @@ thead tr th{
 tbody tr td {
     height:2rem;
     width: 33.33%;
-    font-size: 0.9rem !important;
+    font-size: 0.8rem !important;
 }
 
 .table-hover tbody tr:hover td {
