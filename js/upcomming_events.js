@@ -1,9 +1,3 @@
-const datos = () => {
-    fetchData()
-    .then(data =>  console.log('data >> ', data))
-
-}
-
 //* Cards
 const colCard = document.getElementById("colCard");
 
@@ -13,21 +7,70 @@ const contentCheck = document.getElementById("contenCheck");
 //* Favorite
 const biClassFav = document.querySelector(".biFavorites");
 
-//* Object elements: currentDate - events
-const fechaActual = data.currentDate;
-//const datos = data.events;
-
 //* Events Lengths
 const cardsLength = document.getElementById("cardsLength");
 
+const datos = () => {
+    fetchData()
+    .then(res => res)
+    .then(data => {
+        const dataEvents = data.events
+        const currentDate = data.currentDate
 
-//! Filtrado de Proximas fechas
-const filterComing = datos.filter((item) => item.date >= fechaActual);
-// console.log(filterComing);
+        const filterComing = dataEvents.filter((item) => item.date >= currentDate);
 
-//! Cantidad de cards
-let dataLength = filterComing.length;
-cardsLength.innerHTML = dataLength;
+        renderCards(filterComing, colCard);
+
+        const filterCategories = [...new Set(dataEvents.map((item) => item.category)),
+        ].sort();
+
+        renderChecks(filterCategories, contentCheck);
+
+        renderSearch(contentCheck);
+
+        const handlerSubmit = (e) => {
+            e.preventDefault();
+            contentCheck.addEventListener('input', () => handlerChange(dataEvents, colCard))
+        }
+        contentCheck.addEventListener('change', () => handlerChange(dataEvents, colCard))
+        contentCheck.addEventListener('submit', handlerSubmit)
+
+        //! Favorites
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        function saveFavoritesToLocalStorage(favorites) {
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+        }
+
+        function favoriteToggleColor(biClassFav, arr) {
+            const toggleColor = biClassFav.classList.toggle('biFavRed');
+            const cardItem = biClassFav.closest('.card');
+
+            let eventItem = arr.find(ev => Number(cardItem.getAttribute('key')) === ev._id);
+
+            if (toggleColor) {
+                favorites.push(eventItem);
+            } else {
+                favorites = favorites.filter(fav => fav._id !== Number(eventItem._id));
+            }
+
+            saveFavoritesToLocalStorage(favorites);
+        }
+
+        function addCardFavoriteEvent() {
+            document.addEventListener('click', (e) => {
+                if (e.target.classList.contains('biFavorite')) {
+                    favoriteToggleColor(e.target, dataEvents);
+                }
+            });
+        }
+
+        addCardFavoriteEvent();
+        let dataLength = filterComing.length;
+        cardsLength.innerHTML = dataLength;
+    })
+    .catch(err => console.log('err >> ', err))
+}
+datos()
 
 
 //*-------------------------------------------
@@ -47,7 +90,7 @@ const createCardTemplate = (item) => {
             <div class="hstack gap-3 text-center px-2 py-3">
                 <div class="p-2 fw-bold">$ ${item.price}</div>
                 <div class="p-2 ms-auto">
-                <a href="../details.html?id=${item._id}">Details</a>      
+                <a href="details.html?id=${item._id}">Details</a>      
                 </div>
             </div>
         </div>
@@ -62,15 +105,10 @@ const renderCards = (arr, elementHTML) => {
     });
     elementHTML.innerHTML = structure;
 };
-renderCards(filterComing, colCard);
 
 //*--------------------------------------------
 
 //! Checkbox Template (elementHTML: contentCheck)
-// me guardo las categorias en un array - sin elementos duplicados y ordenados
-const filterCategories = [...new Set(datos.map((item) => item.category)),
-].sort();
-
 const createCheckTemplates = (item) => {
     let template = "";
     template += `
@@ -97,8 +135,6 @@ const renderChecks = (arr, elementHTML) => {
     });
     return structure
 };
-renderChecks(filterCategories, contentCheck);
-
 
 //*--------------------------------------------
 
@@ -131,10 +167,8 @@ const renderSearch = (elementHTML) => {
     elementHTML.innerHTML += structure;
     return structure
 };
-renderSearch(contentCheck);
 
 //*--------------------------------------------
-
 //! Filters & Listeners
 // me creo las funciones de filtrado
 function checksFilter(arrCom) {
@@ -179,42 +213,10 @@ const handlerChange = (arrCom, elementHTML) => {
         if(combineResults.length === 0){
             swal("Event is not found, try with other name...");
         }
-    
     renderCards(combineResults, elementHTML)
 }
 
-const handlerSubmit = (e) => {
-    e.preventDefault();
-    contentCheck.addEventListener('input', () => handlerChange(datos, colCard))
-}
-contentCheck.addEventListener('change', () => handlerChange(datos, colCard))
-contentCheck.addEventListener('submit', handlerSubmit)
-
-//*--------------------------------------------
-
-//! Favorites
-let favorites = []
-function favoriteToggleColor(biClassFav, arr) {
-    const toggleColor= biClassFav.classList.toggle('biFavRed')
-    const cardItem = biClassFav.closest('.card');
 
 
-    let eventItem = arr.find(ev => cardItem.getAttribute('key') === ev._id)
-    if(toggleColor){
-            favorites.push(eventItem);
-    } else {
-        favorites = favorites.filter(fav => fav._id !== eventItem._id);
-    }
-    console.log('favorites: >>', favorites);
-}
 
 
-// agrego el evento a la card
-function addCardFavoriteEvent() {
-    document.addEventListener('click', (e) => {
-        if(e.target.classList.contains('biFavorite')){
-            favoriteToggleColor(e.target, filterComing)
-        }
-    })
-}
-addCardFavoriteEvent()
