@@ -61,7 +61,7 @@ datos()
 function createDetailTemplate(item, current){
     let template = ''
     template = `
-        <div class="card w-100" key=${item._id}>
+        <div class="card " key=${item._id}>
             <div class="row g-0 align-item-center justify-content-evenly align-content-around">
                 <div class="col-md-6">
                     <img
@@ -70,7 +70,6 @@ function createDetailTemplate(item, current){
                         alt=${item.name}
                     >
                 </div>
-                <div class="vr md-2"></div>
                 <div class="col-md-4">
                     <div class="card-body dataBody">
                     <i class="bi bi-heart-fill biFavorite" id="iconfav"></i>
@@ -78,13 +77,13 @@ function createDetailTemplate(item, current){
                             ${item.name}
                         </h4>
                         <ul>
-                            <li>Date:: ${item.date}</li>
-                            <li>Place: ${item.place}</li>
-                            <li>Capacity: ${item.capacity}</li>
+                            <li>Date: <span>${item.date}</span></li>
+                            <li>Place: <span>${item.place}</span></li>
+                            <li>Capacity: <span>${item.capacity}</span></li>
                             <li>
                                 ${item.date < current ? 
-                                    `Assistance: ${item.assistance}`
-                                : `Estimate: ${item.estimate}`
+                                    `Assistance: <span>${item.assistance}</span>`
+                                : `Estimate: <span>${item.estimate}</span>`
                                 }
                             </li>
                             

@@ -298,11 +298,11 @@ footer>.hstack div .bi:hover,
 
 }
 .card-content .card {
-    background-color: #1c0122;
-    border: 5px solid var(--dark-violet-transparent);
-    box-shadow: 1px -2px 20px 11px var(--ligth-violet-transparent);
+    background-color: #b562c55e;
+    border: none;
     padding: 2rem 0;
     margin: 1rem 0;
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
 }
 
 .card-content .card img {
@@ -310,25 +310,29 @@ footer>.hstack div .bi:hover,
     height: 30vh;
     object-fit: cover;
     border-radius: 2rem 0;
-    box-shadow: 1px -2px 20px 11px var(--ligth-violet-transparent);
+    box-shadow: -1px 2px 20px  var(--ligth-violet-transparent);
+    padding: 1rem ;
+    
 }
-
 
 .dataBody h4 {
     margin: 2.5rem 0;
     text-transform:uppercase;
     text-align: center !important;
-    color: var(--ligth-violet) !important;
+    color: var(--dark-violet) !important;
 }
 
 .dataBody li {
     list-style-type: none;
     line-height: 2rem;
-    font-weight: 600;
-    color: var(--magenta);
-
+    font-weight: 700;
+    color: var(--dark-violet);
 }
 
+.dataBody span{
+    color: var(--magenta);
+    padding-left: 0.1rem;
+}
 
 /** STATS */
 table{
