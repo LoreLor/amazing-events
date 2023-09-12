@@ -34,7 +34,7 @@ const datos = () => {
         // Variables de Asignacion a celdas segun posicion en tabla 1
         const highestAssistanceEvent = `${eventPlusAssistance.name} - ${percentAssistPlus}%`;
         const lowestAssistanceEvent = `${minusAssistance.name} - ${percentAssistMinus}%`;
-        const highestCapacity = `${highestCapacityEvent.name} - ${highestCapacityEvent.capacity}`;
+        const highestCapacity = `${highestCapacityEvent.name} - ${(highestCapacityEvent.capacity).toLocaleString(undefined, { maximumFractionDigits: 0 })}`;
 
         cell1.textContent = highestAssistanceEvent;
         cell2.textContent = lowestAssistanceEvent;
