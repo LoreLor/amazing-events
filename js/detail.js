@@ -63,13 +63,16 @@ const datos = () => {
                 eventoElement.classList.add("random-event");
                 eventoElement.innerHTML = `
                 <div class="col">
-                <div class="card h-100" id="random-event">
+                <div class="card " id="random-event">
                   <img src=${item.image} class="card-img-top" alt=${item.name}>
-                  <div class="card-body">
-                    <h5 class="card-title">${item.name}</h5>
+                  <div class="card-body h-100">
+                    <h6 class="card-title">${item.name}</h6>
                     <p class="card-text">${item.place}</p>
                     <small class="text-body-secondary">Date: ${item.date}</small>
                   </div>
+                  <div class="p-2 ms-auto">
+                    <a href="../details.html?id=${item._id}">Details</a>      
+                </div>
                 </div>
               </div>
                 `;
@@ -142,8 +145,8 @@ function createDetailTemplate(item, current){
                                 }
                             </li>
                         </ul>
+                        </div>
                         <span class="state" style="${colorStyle}">${stateEvent}</span>
-                    </div>
                 </div>
             </div>
         </div>

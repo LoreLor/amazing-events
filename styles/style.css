@@ -282,13 +282,25 @@ body {
 		transform: scale3d(1, 1, 1);
 	}
 }
-
+.random-event img{
+    object-fit: cover;
+    height:8rem;
+}
 .random-event .card {
     background: radial-gradient(#ffffffea, #f144cc8f);
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
     height: 100%;
 }
 
+.random-event a{
+    border: 2px solid var(--dark-violet2);
+    background-color: var(--dark-violet2);
+    font-weight: 700;
+    color: var(--ligth-violet);
+    padding: 3px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+}
 
 /** FOOTER */
 footer{
@@ -617,4 +629,29 @@ tbody tr td {
     }
 
 }
+
+
+/* Logo */
+.logo-solido {
+    animation: fadein 5s;
+    transform: rotateZ(0deg) !important;
+    z-index: 1;
+}
+
+@keyframes fadein {
+    0% {
+    opacity:0;
+    }
+    25%{
+      opacity:0.5;
+      }
+    50%{
+    opacity:0.8;
+    }
+    100% {
+    opacity:1;
+    }
+
+    }    
+
 
