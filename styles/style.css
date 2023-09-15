@@ -286,6 +286,7 @@ body {
 .random-event .card {
     background: radial-gradient(#ffffffea, #f144cc8f);
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.77);
+    height: 100%;
 }
 
 
