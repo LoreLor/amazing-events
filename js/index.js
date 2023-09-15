@@ -1,22 +1,31 @@
 //* Cards
 const colCard = document.getElementById("colCard");
-const cardsLength = document.getElementById("cardsLength");
+
 //* Checkboxs & Search Content
-const contentCheck = document.getElementById("contenCheck"); 
+const contentCheck = document.getElementById("contenCheck");
+
+//* Favorite
+const biClassFav = document.querySelector(".biFavorites");
+
+//* Events Lengths
+const cardsLength = document.getElementById("cardsLength");
+const state = document.querySelectorAll('.state');
 
 const datos = () => {
     fetchData()
-    .then((res) => res.events)
-    .then((data) => {
-            console.log("data >> ", data);
+    .then(res=> res)
+    .then(data => {
+            const dataEvents = data.events
+            const currentDate = data.currentDate
+
             let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
-            renderCards(data, colCard);
+            renderCards(dataEvents, currentDate, colCard);
 
             //*----------------------------------------
 
             const filterCategories = [
-                ...new Set(data.map((item) => item.category)),
+                ...new Set(dataEvents.map((item) => item.category)),
             ].sort();
 
             renderChecks(filterCategories, contentCheck);
@@ -28,19 +37,19 @@ const datos = () => {
             const handlerSubmit = (e) => {
                 e.preventDefault();
                 contentCheck.addEventListener("input", () =>
-                    handlerChange(data, colCard)
+                    handlerChange(dataEvents, currentDate, colCard)
                 );
             };
 
             contentCheck.addEventListener("change", () =>
-                handlerChange(data, colCard)
+                handlerChange(dataEvents,currentDate, colCard)
             );
             contentCheck.addEventListener("submit", handlerSubmit);
 
             //*----------------------------------------
 
            //! Favorites
-            function favoriteToggleColor(biClassFav, data) {
+            function favoriteToggleColor(biClassFav, dataEvents) {
                 const toggleColor = biClassFav.classList.toggle('biFavRed');
                 const cardItem = biClassFav.closest('.card');
                 const favEvent = document.getElementById('fav-cards');
@@ -48,7 +57,7 @@ const datos = () => {
                 if (!cardItem) return; // Si no hay una tarjeta me voy
 
                 const eventId = cardItem.getAttribute('key');
-                const eventItem = data.find(ev => ev._id === Number(eventId));
+                const eventItem = dataEvents.find(ev => ev._id === Number(eventId));
                 const isFavorite = favorites.some(fav => fav._id === Number(eventId));
 
                 if (toggleColor && eventItem && !isFavorite) {
@@ -58,8 +67,8 @@ const datos = () => {
                 }
 
                 saveFavoritesToLocalStorage();
-                renderCardsFavorite(favorites, favEvent);
-
+                renderCardsFavorite(favorites, currentDate, favEvent);
+ 
                 if (favorites.length === 0) {
                     const asideFavorite = document.getElementById("fav-aside");
                     asideFavorite.classList.remove("open");
@@ -71,14 +80,14 @@ const datos = () => {
                 localStorage.setItem("favorites", JSON.stringify(favorites));
             }
 
-            function addCardFavoriteEvent(data) {
+            function addCardFavoriteEvent() {
                 document.addEventListener('click', (e) => {
                     if (e.target.classList.contains('biFavorite')) {
-                        favoriteToggleColor(e.target, data);
+                        favoriteToggleColor(e.target, dataEvents);
                     }
                 });
             }
-            addCardFavoriteEvent(data);
+            addCardFavoriteEvent();
 
             //* Aside Favorites
             function asideToggleOpen(elementHTML) {
@@ -100,7 +109,7 @@ const datos = () => {
 
                 if (favorites.length > 0) {
                     asideFavorite.classList.add("open");
-                    renderCardsFavorite(favorites, favEvent);
+                    renderCardsFavorite(favorites, currentDate, favEvent);
                 }
 
                 showAside.addEventListener("click", toggleAside);
@@ -108,28 +117,9 @@ const datos = () => {
 
             showFavoriteAside();
 
-            function classFavoriteHome() {
-                const favEvent = document.getElementById('fav-cards');
-                const cards = colCard.querySelectorAll('.card');
-            
-                cards.forEach((card) => {
-                    const eventId = card.getAttribute('key');
-                    const isFavorite = favorites.some((fav) => fav._id === Number(eventId));
-                    const heartIcon = card.querySelector('.biFavorite');
-            
-                    if (isFavorite) {
-                        heartIcon.classList.add('biFavRed');
-                    } else {
-                        heartIcon.classList.remove('biFavRed');
-                    }
-                })
-
-                renderCardsFavorite(favorites, favEvent);
-            }
-            classFavoriteHome()
 
             //* Events Lengths
-            let dataLength = data.length;
+            let dataLength = dataEvents.length;
             cardsLength.innerHTML = dataLength;
         })
         .catch((err) => console.log(err));
@@ -139,12 +129,16 @@ datos();
 
 
  //! Cards Template (elementHTML: colCard)
- const createTemplate = (item) => {
+ const createTemplate = (item, current) => {
     let template = "";
-    template += `<div class="col-md-6 px-2">
-            <div class="card h-100" key=${item._id} data-favorite="false">
+    let stateEvent = current < item.date ? 'Coming up' : 'Past Event';
+    let colorStyle = stateEvent === 'Past Event' ? 'color: red; border: 2px solid red' : 'color: green; border: 2px solid green';
+
+    template += `<div class="col-md-6">
+            <div class="card h-100" key=${item._id} id="card">
                 <img src=${item.image} class="card-img-top" alt="imagen 2">
                 <i class="bi bi-heart-fill biFavorite" id="iconfav"></i>
+                <span class="state" style="${colorStyle}">${stateEvent}</span>
                 <div class="card-body">
                     <h5 class="card-title">${item.name}</h5>
                     <p class="card-text">
@@ -162,12 +156,12 @@ datos();
     return template;
 };
 
-const renderCards = (array, elementHTML) => {
+const renderCards = (array, current, elementHTML) => {
     let structure = "";
     array.forEach((item) => {
-        structure += createTemplate(item);
-        elementHTML.innerHTML = structure;
+        structure += createTemplate(item, current);
     });
+    elementHTML.innerHTML = structure;
     return structure;
 };
 
@@ -232,20 +226,14 @@ const renderSearch = (elementHTML) => {
 //! Filters & Listeners
 function cheksFiltered(arr) {
     // checks seleccionados
-    const nodeListChecks = document.querySelectorAll(
-        'input[type="checkbox"]:checked'
-    );
+    const nodeListChecks = document.querySelectorAll('input[type="checkbox"]:checked');
 
     //paso a array
-    let arrChecks = Array.from(nodeListChecks).map(
-        (input) => input.value
-    );
+    let arrChecks = Array.from(nodeListChecks).map((input) => input.value);
 
     //filter
-    let itemsFiltered =
-        arrChecks.length > 0
-            ? arr.filter((item) =>
-                arrChecks.includes(item.category))
+    let itemsFiltered = arrChecks.length > 0
+            ? arr.filter((item) => arrChecks.includes(item.category))
             : arr;
     return itemsFiltered;
 }
@@ -256,20 +244,15 @@ function searchFiltered(arr) {
         'input[type="search"]'
     );
     const valueSearch = inputValue.value.toLowerCase();
-    // la primera con mayuscula
-    const normalizedValue =
-        valueSearch.charAt(0).toUpperCase() +
-            valueSearch.slice(1) || valueSearch;
-    // filter
-    let inputSearch =
-        normalizedValue !== ""
-            ? arr.filter(item =>item.name.includes(normalizedValue))
+    
+    const inputSearch = valueSearch !== ""
+            ? arr.filter(item =>(item.name).toLowerCase().includes(valueSearch))
             : arr;
 
     return inputSearch;
 }
 
-function combineFilters(arr) {
+function combineFilters(arr, current) {
     // me traigo las funciones de filtrado
     let checksFilterResults = cheksFiltered(arr);
     let searchFilterResult = searchFiltered(arr);
@@ -285,21 +268,26 @@ function combineFilters(arr) {
     return combined;
 }
 
-const handlerChange = (arr, elementHTML) => {
+const handlerChange = (arr,current, elementHTML) => {
     let combineResults = combineFilters(arr);
     if (combineResults.length === 0) {
         swal("Event is not found, try with other name...");
     }
-    renderCards(combineResults, elementHTML);
+    renderCards(combineResults,current, elementHTML);
 };
 
 //! Favorite
-function createTemplateFavorite(item) {
-    const template = `
+
+function createTemplateFavorite(item, current) {
+    let stateEvent = current < item.date ? 'Coming up' : 'Past Event';
+    let colorStyle = stateEvent === 'Past Event' ? 'color: red; border: 2px solid red' : 'color: green; border: 2px solid green';
+
+    let template = `
         <li>
-            <div class="card h-100" key=${item._id} data-favorite="true">
+            <div class="card h-100" key=${item._id}>
                 <img src=${item.image} class="card-img-top" alt="imagen 2">
                 <i class="bi bi-heart-fill biFavorite biFavRed" id="iconfav"></i>
+                <span class="state" style="${colorStyle}">${stateEvent}</span>
                 <div class="card-body">
                     <h5 class="card-title">${item.name}</h5>
                     <p class="card-text">
@@ -315,14 +303,16 @@ function createTemplateFavorite(item) {
             </div>
         </li>
     `;
+
     return template;
 }
 
-function renderCardsFavorite(array, elementHTML) {
+function renderCardsFavorite(array, current, elementHTML) {
     let structure = "";
     array?.forEach((item) => {
-        structure += createTemplateFavorite(item);
+        structure += createTemplateFavorite(item, current);
     });
+    
     elementHTML.innerHTML = structure;
     return structure
 }

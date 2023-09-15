@@ -77,10 +77,18 @@
                                         STATS
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <button type="button" class="nav-link nav-link" id="show-fav">
+                                        <i class="bi bi-heart-fill" ></i>
+                                    </button>
+                                </li>
                             </ul>
                         </div>
                     </div>
                 </nav>
+                <aside id="fav-aside">
+                    <ul id="fav-cards"></ul>
+                </aside>
             </header>
 
             <!-- Main -->
@@ -188,7 +196,7 @@
                 <div class="container-fluid mt-2 py-4 px-3 checks-content" id="contenCheck"></div>
 
                 <!-- Cards - JS-->
-                <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-2 pb-5 px-3"  id="colCard"></div>
+                <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-2 pb-5 px-3 justify-content-center"  id="colCard"></div>
                 
                 <!-- Go up -->
                 <div class="btn-up">

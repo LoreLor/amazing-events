@@ -59,7 +59,7 @@ const datos = () => {
             }
 
             saveFavoritesToLocalStorage();
-            //renderCardsFavorite(favorites, favEvent);
+            renderCardsFavorite(favorites, favEvent);
 
             if (favorites.length === 0) {
                 const asideFavorite = document.getElementById("fav-aside");
@@ -80,6 +80,34 @@ const datos = () => {
             });
         }
         addCardFavoriteEvent();
+
+        //* Aside Favorites
+        function asideToggleOpen(elementHTML) {
+            let isOpen = false;
+
+            const toggleOpen = () => {
+                isOpen = !isOpen;
+                elementHTML.classList.toggle("open", isOpen);
+                elementHTML.classList.toggle("closed", !isOpen);
+            };
+            return toggleOpen;
+        }
+
+        function showFavoriteAside() {
+            const asideFavorite = document.getElementById("fav-aside");
+            const showAside = document.getElementById("show-fav");
+            const favEvent = document.getElementById("fav-cards");
+            let toggleAside = asideToggleOpen(asideFavorite);
+
+            if (favorites.length > 0) {
+                asideFavorite.classList.add("open");
+                renderCardsFavorite(favorites, currentDate, favEvent);
+            }
+
+            showAside.addEventListener("click", toggleAside);
+        }
+
+        showFavoriteAside();
 
         let dataLength = filterComing.length;
         cardsLength.innerHTML = dataLength;
@@ -202,10 +230,9 @@ function checksFilter(arrCom) {
 function searchFilter(arrCom) {
     const inputValue = document.querySelector('input[type="search"]');
     const valueSearch = inputValue.value.toLowerCase();
-    const normalizedValue = valueSearch.charAt(0).toUpperCase() + valueSearch.slice(1) || valueSearch;
 
-    let inputSearch = normalizedValue !== ''? 
-        arrCom.filter(item => (item.name).includes(normalizedValue))
+    let inputSearch = valueSearch !== ''? 
+        arrCom.filter(item => (item.name).toLowerCase().includes(valueSearch))
         : arrCom;
 
     return inputSearch
@@ -233,38 +260,38 @@ const handlerChange = (arrCom, elementHTML) => {
 
 //*--------------------------------------------
 // //! Favorite
-// function createTemplateFavorite(item) {
-//     const template = `
-//         <li>
-//             <div class="card h-100" key=${item._id} data-favorite="true">
-//                 <img src=${item.image} class="card-img-top" alt="imagen 2">
-//                 <i class="bi bi-heart-fill biFavorite biFavRed" id="iconfav"></i>
-//                 <div class="card-body">
-//                     <h5 class="card-title">${item.name}</h5>
-//                     <p class="card-text">
-//                         ${item.description}
-//                     </p>
-//                 </div>
-//                 <div class="hstack gap-3 text-center px-2 py-3">
-//                     <div class="p-2 fw-bold">$ ${item.price}</div>
-//                     <div class="p-2 ms-auto">
-//                         <a href="../details.html?id=${item._id}">Details</a>      
-//                     </div>
-//                 </div>
-//             </div>
-//         </li>
-//     `;
-//     return template;
-// }
+function createTemplateFavorite(item) {
+    const template = `
+        <li>
+            <div class="card h-100" key=${item._id}>
+                <img src=${item.image} class="card-img-top" alt="imagen 2">
+                <i class="bi bi-heart-fill biFavorite biFavRed" id="iconfav"></i>
+                <div class="card-body">
+                    <h5 class="card-title">${item.name}</h5>
+                    <p class="card-text">
+                        ${item.description}
+                    </p>
+                </div>
+                <div class="hstack gap-3 text-center px-2 py-3">
+                    <div class="p-2 fw-bold">$ ${item.price}</div>
+                    <div class="p-2 ms-auto">
+                        <a href="../details.html?id=${item._id}">Details</a>      
+                    </div>
+                </div>
+            </div>
+        </li>
+    `;
+    return template;
+}
 
-// function renderCardsFavorite(array, elementHTML) {
-//     let structure = "";
-//     array?.forEach((item) => {
-//         structure += createTemplateFavorite(item);
-//     });
-//     elementHTML.innerHTML = structure;
-//     return structure
-// }
+function renderCardsFavorite(array, elementHTML) {
+    let structure = "";
+    array?.forEach((item) => {
+        structure += createTemplateFavorite(item);
+    });
+    elementHTML.innerHTML = structure;
+    return structure
+}
 
 
 
