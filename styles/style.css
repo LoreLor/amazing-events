@@ -449,7 +449,7 @@ tbody tr td {
     justify-content: center;
     align-items: center;
     position: fixed;
-    bottom:10rem;
+    bottom:0rem;
     right: 6.5vw;
     border: 2px solid var(--dark-violet);
     border-radius: 50%;
